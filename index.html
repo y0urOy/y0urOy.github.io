@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <title data-zh="于永昊 Yonghao Yu">Yonghao Yu</title>
+  <meta name="description" content="Ph.D. student at The University of Tokyo. Visual generative models: autoregressive image and video generation with foresight, and 3D generation." data-zh="东京大学博士生，研究视觉生成模型：带 foresight 的自回归图像与视频生成，以及 3D 生成。">
+  <meta name="theme-color" content="#fafaf8">
+  <script>
+    /* Pre-paint: theme and language are applied before the first render, so neither flashes.
+       Language: English by default; ?lang=zh or ?lang=en overrides and is remembered. */
+    (function (root, w) {
+      var store = null;
+      try { store = w.localStorage; } catch (e) {}
+      function get(k) { try { return store ? store.getItem(k) : null; } catch (e) { return null; } }
+      function put(k, v) { try { if (store) store.setItem(k, v); } catch (e) {} }
+      root.classList.add('js');
+      var theme = get('theme');
+      if (theme !== 'dark' && theme !== 'light') {
+        theme = w.matchMedia && w.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      root.setAttribute('data-theme', theme);
+      var tc = document.querySelector('meta[name="theme-color"]');
+      if (tc) tc.setAttribute('content', theme === 'dark' ? '#121212' : '#fafaf8');
+      function swap(el, attr) {
+        if (!el || !el.hasAttribute('data-zh')) return null;
+        if (!el.hasAttribute('data-en')) el.setAttribute('data-en', attr ? el.getAttribute(attr) : el.textContent);
+        return el;
+      }
+      function applyLang(l) {
+        l = l === 'zh' ? 'zh' : 'en';
+        root.setAttribute('data-lang', l);
+        root.setAttribute('lang', l === 'zh' ? 'zh-Hans' : 'en');
+        var title = swap(document.querySelector('title'));
+        if (title) document.title = title.getAttribute('data-' + l);
+        var desc = swap(document.querySelector('meta[name="description"]'), 'content');
+        if (desc) desc.setAttribute('content', desc.getAttribute('data-' + l));
+        if (l === 'zh' && !document.getElementById('font-zh')) {
+          var link = document.createElement('link');
+          link.id = 'font-zh';
+          link.rel = 'stylesheet';
+          link.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&display=swap';
+          document.head.appendChild(link);
+        }
+        return l;
+      }
+      var q = null;
+      try { q = new URLSearchParams(w.location.search).get('lang'); } catch (e) {}
+      if (q === 'zh' || q === 'en') put('lang', q);
+      applyLang(q === 'zh' || q === 'en' ? q : get('lang'));
+      w.__site = { get: get, put: put, applyLang: applyLang };
+    })(document.documentElement, window);
+  </script>
+  <meta name="author" content="Yonghao Yu">
+  <link rel="canonical" href="https://y0urOy.github.io/">
+  <link rel="alternate" hreflang="en" href="https://y0urOy.github.io/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://y0urOy.github.io/?lang=zh">
+  <link rel="alternate" hreflang="x-default" href="https://y0urOy.github.io/">
+  <meta property="og:type" content="profile">
+  <meta property="profile:first_name" content="Yonghao">
+  <meta property="profile:last_name" content="Yu">
+  <meta property="og:site_name" content="Yonghao Yu">
+  <meta property="og:title" content="Yonghao Yu">
+  <meta property="og:description" content="Ph.D. student at The University of Tokyo. Visual generative models: autoregressive image and video generation with foresight, and 3D generation.">
+  <meta property="og:url" content="https://y0urOy.github.io/">
+  <meta property="og:image" content="https://y0urOy.github.io/assets/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Yonghao Yu: Teaching generative models to look ahead.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Yonghao Yu">
+  <meta name="twitter:description" content="Ph.D. student at The University of Tokyo. Visual generative models: autoregressive image and video generation with foresight, and 3D generation.">
+  <meta name="twitter:image" content="https://y0urOy.github.io/assets/img/og.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Web fonts load without blocking the first paint (Google Fonts can be slow or blocked in some regions). -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP&amp;text=%E4%BA%8E%E6%B0%B8%E6%98%8A%E3%83%A8%E3%83%B3%E3%83%8F%E3%82%AA%E3%83%A6%E4%B8%AD&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP&amp;text=%E4%BA%8E%E6%B0%B8%E6%98%8A%E3%83%A8%E3%83%B3%E3%83%8F%E3%82%AA%E3%83%A6%E4%B8%AD&amp;display=swap"></noscript>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/site.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Yonghao Yu",
+    "alternateName": [
+      "于永昊",
+      "ヨンハオ ユ"
+    ],
+    "url": "https://y0urOy.github.io/",
+    "email": "mailto:yuyonghao@g.ecc.u-tokyo.ac.jp",
+    "jobTitle": "Ph.D. student",
+    "description": "Ph.D. student at The University of Tokyo. Visual generative models: autoregressive image and video generation with foresight, and 3D generation.",
+    "affiliation": [
+      {
+        "@type": "CollegeOrUniversity",
+        "name": "The University of Tokyo",
+        "url": "https://www.u-tokyo.ac.jp/en/"
+      },
+      {
+        "@type": "Organization",
+        "name": "Alaya Lab",
+        "url": "https://alayalab.ai/"
+      }
+    ],
+    "alumniOf": [
+      {
+        "@type": "CollegeOrUniversity",
+        "name": "Waseda University",
+        "url": "https://www.waseda.jp/top/en/"
+      },
+      {
+        "@type": "CollegeOrUniversity",
+        "name": "Sichuan University",
+        "url": "https://www.scu.edu.cn/"
+      }
+    ],
+    "knowsAbout": [
+      "Autoregressive image and video generation",
+      "foresight",
+      "3D generation"
+    ],
+    "sameAs": [
+      "https://scholar.google.com/citations?user=lwuwuAYAAAAJ&hl=en",
+      "https://github.com/y0urOy",
+      "https://openreview.net/profile?id=~Yonghao_Yu2",
+      "https://huggingface.co/y0urOy",
+      "https://orcid.org/0000-0003-1810-3289"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <svg class="sr-only" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2" ry="2"/><path d="M3 7l9 6 9-6"/></g></symbol>
+    <symbol id="i-scholar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-4 9 4-9 4-9-4Z"/><path d="M7 12v4c0 2 10 2 10 0v-4"/><path d="M21 10v5"/></g></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.17-1.11-1.48-1.11-1.48-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.38-2.04 1.02-2.76-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.03.8-.23 1.65-.34 2.5-.34.85 0 1.7.12 2.5.34 1.9-1.3 2.74-1.03 2.74-1.03.55 1.41.2 2.45.1 2.71.64.72 1.02 1.64 1.02 2.76 0 3.94-2.34 4.81-4.57 5.06.36.32.68.95.68 1.92 0 1.39-.01 2.5-.01 2.84 0 .26.18.59.69.48 3.97-1.35 6.84-5.17 6.84-9.67C22 6.58 17.52 2 12 2Z"/></symbol>
+    <symbol id="i-hf" viewBox="0 0 24 24"><path fill="currentColor" d="M12.025 1.13c-5.77 0-10.449 4.647-10.449 10.378 0 1.112.178 2.181.503 3.185.064-.222.203-.444.416-.577a.96.96 0 0 1 .524-.15c.293 0 .584.124.84.284.278.173.48.408.71.694.226.282.458.611.684.951v-.014c.017-.324.106-.622.264-.874s.403-.487.762-.543c.3-.047.596.06.787.203s.31.313.4.467c.15.257.212.468.233.542.01.026.653 1.552 1.657 2.54.616.605 1.01 1.223 1.082 1.912.055.537-.096 1.059-.38 1.572.637.121 1.294.187 1.967.187.657 0 1.298-.063 1.921-.178-.287-.517-.44-1.041-.384-1.581.07-.69.465-1.307 1.081-1.913 1.004-.987 1.647-2.513 1.657-2.539.021-.074.083-.285.233-.542.09-.154.208-.323.4-.467a1.08 1.08 0 0 1 .787-.203c.359.056.604.29.762.543s.247.55.265.874v.015c.225-.34.457-.67.683-.952.23-.286.432-.52.71-.694.257-.16.547-.284.84-.285a.97.97 0 0 1 .524.151c.228.143.373.388.43.625l.006.04a10.3 10.3 0 0 0 .534-3.273c0-5.731-4.678-10.378-10.449-10.378M8.327 6.583a1.5 1.5 0 0 1 .713.174 1.487 1.487 0 0 1 .617 2.013c-.183.343-.762-.214-1.102-.094-.38.134-.532.914-.917.71a1.487 1.487 0 0 1 .69-2.803m7.486 0a1.487 1.487 0 0 1 .689 2.803c-.385.204-.536-.576-.916-.71-.34-.12-.92.437-1.103.094a1.487 1.487 0 0 1 .617-2.013 1.5 1.5 0 0 1 .713-.174m-10.68 1.55a.96.96 0 1 1 0 1.921.96.96 0 0 1 0-1.92m13.838 0a.96.96 0 1 1 0 1.92.96.96 0 0 1 0-1.92M8.489 11.458c.588.01 1.965 1.157 3.572 1.164 1.607-.007 2.984-1.155 3.572-1.164.196-.003.305.12.305.454 0 .886-.424 2.328-1.563 3.202-.22-.756-1.396-1.366-1.63-1.32q-.011.001-.02.006l-.044.026-.01.008-.03.024q-.018.017-.035.036l-.032.04a1 1 0 0 0-.058.09l-.014.025q-.049.088-.11.19a1 1 0 0 1-.083.116 1.2 1.2 0 0 1-.173.18q-.035.029-.075.058a1.3 1.3 0 0 1-.251-.243 1 1 0 0 1-.076-.107c-.124-.193-.177-.363-.337-.444-.034-.016-.104-.008-.2.022q-.094.03-.216.087-.06.028-.125.063l-.13.074q-.067.04-.136.086a3 3 0 0 0-.135.096 3 3 0 0 0-.26.219 2 2 0 0 0-.12.121 2 2 0 0 0-.106.128l-.002.002a2 2 0 0 0-.09.132l-.001.001a1.2 1.2 0 0 0-.105.212q-.013.036-.024.073c-1.139-.875-1.563-2.317-1.563-3.203 0-.334.109-.457.305-.454m.836 10.354c.824-1.19.766-2.082-.365-3.194-1.13-1.112-1.789-2.738-1.789-2.738s-.246-.945-.806-.858-.97 1.499.202 2.362c1.173.864-.233 1.45-.685.64-.45-.812-1.683-2.896-2.322-3.295s-1.089-.175-.938.647 2.822 2.813 2.562 3.244-1.176-.506-1.176-.506-2.866-2.567-3.49-1.898.473 1.23 2.037 2.16c1.564.932 1.686 1.178 1.464 1.53s-3.675-2.511-4-1.297c-.323 1.214 3.524 1.567 3.287 2.405-.238.839-2.71-1.587-3.216-.642-.506.946 3.49 2.056 3.522 2.064 1.29.33 4.568 1.028 5.713-.624m5.349 0c-.824-1.19-.766-2.082.365-3.194 1.13-1.112 1.789-2.738 1.789-2.738s.246-.945.806-.858.97 1.499-.202 2.362c-1.173.864.233 1.45.685.64.451-.812 1.683-2.896 2.322-3.295s1.089-.175.938.647-2.822 2.813-2.562 3.244 1.176-.506 1.176-.506 2.866-2.567 3.49-1.898-.473 1.23-2.037 2.16c-1.564.932-1.686 1.178-1.464 1.53s3.675-2.511 4-1.297c.323 1.214-3.524 1.567-3.287 2.405.238.839 2.71-1.587 3.216-.642.506.946-3.49 2.056-3.522 2.064-1.29.33-4.568 1.028-5.713-.624"/></symbol>
+  </svg>
+  <a class="skip-link" href="#content"><span data-lang-en>Skip to content</span><span data-lang-zh>跳到正文</span></a>
+
+  <header class="site-header">
+    <nav class="site-nav">
+      <a class="site-nav__home" href="./" aria-current="page">~/<span class="sr-only"> <span data-lang-en>Yonghao Yu</span><span data-lang-zh>于永昊</span></span></a>
+      <div class="site-nav__links">
+        <a href="#publications"><span data-lang-en>Publications</span><span data-lang-zh>论文</span></a>
+        <a href="cv.pdf" type="application/pdf" hreflang="en">CV</a>
+        <div class="site-nav__toggles js-only">
+          <button class="toggle lang-toggle" id="lang-toggle" type="button" lang="zh-Hans" aria-label="切换到中文"
+                  data-label-en="切换到中文" data-label-zh="Switch to English"><span data-lang-en aria-hidden="true">中</span><span data-lang-zh aria-hidden="true">EN</span></button>
+          <button class="toggle theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark theme"
+                  data-label-dark-en="Switch to dark theme" data-label-dark-zh="切换到深色模式"
+                  data-label-light-en="Switch to light theme" data-label-light-zh="切换到浅色模式"><span class="theme-toggle__moon" aria-hidden="true">&#x263E;</span><span class="theme-toggle__sun" aria-hidden="true">&#x2609;</span></button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content" class="site-main">
+    <section class="landing-hero" aria-labelledby="name">
+      <h1 class="landing-hero__name" id="name"><span data-lang-en>Yonghao Yu</span><span data-lang-zh>于永昊</span></h1>
+      <p class="landing-hero__native"><span data-lang-en><span lang="zh-Hans">于永昊</span> · </span><span data-lang-zh><span lang="en">Yonghao Yu</span> · </span><span lang="ja">ヨンハオ ユ</span></p>
+      <p class="landing-hero__subtitle" data-lang-en>Teaching generative models to look ahead.</p>
+      <p class="landing-hero__subtitle" data-lang-zh>让生成模型学会向前看。</p>
+      <p class="landing-hero__subtitle" data-lang-en>Ph.D. student at The University of Tokyo.</p>
+      <p class="landing-hero__subtitle" data-lang-zh>东京大学博士生。</p>
+      <ul class="icon-row landing-hero__links">
+        <li><a class="icon-link" href="mailto:yuyonghao@g.ecc.u-tokyo.ac.jp" title="Email" data-title-en="Email" data-title-zh="邮箱"><svg aria-hidden="true" focusable="false"><use href="#i-mail"></use></svg><span class="sr-only" data-lang-en>Email</span><span class="sr-only" data-lang-zh>邮箱</span></a></li>
+        <li><a class="icon-link" href="https://scholar.google.com/citations?user=lwuwuAYAAAAJ&amp;hl=en" rel="me" title="Google Scholar"><svg aria-hidden="true" focusable="false"><use href="#i-scholar"></use></svg><span class="sr-only">Google Scholar</span></a></li>
+        <li><a class="icon-link" href="https://github.com/y0urOy" rel="me" title="GitHub"><svg aria-hidden="true" focusable="false"><use href="#i-github"></use></svg><span class="sr-only">GitHub</span></a></li>
+        <li><a class="icon-link" href="https://openreview.net/profile?id=~Yonghao_Yu2" rel="me" title="OpenReview"><span class="icon-text" aria-hidden="true">OR</span><span class="sr-only">OpenReview</span></a></li>
+        <li><a class="icon-link" href="https://huggingface.co/y0urOy" rel="me" title="Hugging Face"><svg aria-hidden="true" focusable="false"><use href="#i-hf"></use></svg><span class="sr-only">Hugging Face</span></a></li>
+        <li><a class="icon-link" href="cv.pdf" title="CV" type="application/pdf" hreflang="en"><span class="icon-text" aria-hidden="true">CV</span><span class="sr-only">CV</span></a></li>
+      </ul>
+    </section>
+
+    <section class="landing-section" id="about" aria-labelledby="about-h">
+      <h2 class="section-label" id="about-h"><span data-lang-en>About</span><span data-lang-zh>简介</span></h2>
+      <div class="bio">
+        <p data-lang-en>I am a Ph.D. student in <a href="https://www.cvm.t.u-tokyo.ac.jp/en/">Yamasaki Lab</a> at The University of Tokyo, advised by Prof. Toshihiko Yamasaki, and a research intern at <a href="https://alayalab.ai/">Alaya Lab</a>. My Ph.D. is supported by the <a href="https://www.jst.go.jp/jisedai/spring/en/">JST SPRING</a> program.</p>
+        <p data-lang-zh>我是东京大学<a href="https://www.cvm.t.u-tokyo.ac.jp/en/">山崎研究室（Yamasaki Lab）</a>的博士生，导师是山崎俊彦（Toshihiko Yamasaki）教授，同时在 <a href="https://alayalab.ai/">Alaya Lab</a> 担任研究实习生。我的博士研究由 <a href="https://www.jst.go.jp/jisedai/spring/en/">JST SPRING</a> 项目资助。</p>
+        <p data-lang-en>I work on visual generative models. Much of my recent work asks whether training signals from the future, which I call foresight, can help autoregressive image and video generators plan ahead without changing how they run at inference. I also build 3D generation systems for programmable worlds.</p>
+        <p data-lang-zh>我的研究方向是视觉生成模型。近期的工作主要围绕一个问题：来自未来的训练信号（我称之为 foresight，即“预见”）能否帮助自回归图像和视频生成模型提前规划，同时不改变推理方式。我也在做面向可编程世界的 3D 生成系统。</p>
+        <p data-lang-en>Before that, I received my M.Eng. from <a href="https://www.waseda.jp/fsci/gips/en/">Waseda University</a> and my B.Eng. in Cyber Science and Engineering from <a href="https://www.scu.edu.cn/">Sichuan University</a>.</p>
+        <p data-lang-zh>此前，我在<a href="https://www.waseda.jp/fsci/gips/en/">早稻田大学</a>获得工学硕士学位，在<a href="https://www.scu.edu.cn/">四川大学</a>获得网络空间安全专业工学学士学位。</p>
+      </div>
+    </section>
+
+    <section class="landing-section" id="news" aria-labelledby="news-h">
+      <h2 class="section-label" id="news-h"><span data-lang-en>News</span><span data-lang-zh>动态</span></h2>
+      <ul class="news-list" id="news-list">
+        <li class="news-item">
+          <time datetime="2026-10">2026.10</time>
+          <p data-lang-en>Released <b>MeshAxiom</b>, an agent-native 3D foundation stack, with Alaya Lab: <a href="https://alaya-lab.github.io/MeshAxiom/">project</a>, <a href="https://github.com/AlayaLab/MeshAxiom">code</a> and <a href="https://huggingface.co/AlayaLab/MeshAxiom-Base">model</a>.</p>
+          <p data-lang-zh>与 Alaya Lab 发布 <b>MeshAxiom</b>，一个智能体原生（agent-native）的 3D 基础技术栈：<a href="https://alaya-lab.github.io/MeshAxiom/">项目主页</a>、<a href="https://github.com/AlayaLab/MeshAxiom">代码</a>和<a href="https://huggingface.co/AlayaLab/MeshAxiom-Base">模型</a>。</p>
+        </li>
+        <li class="news-item">
+          <time datetime="2026-10">2026.10</time>
+          <p data-lang-en><b>EditHero</b>, a benchmark for long-horizon part-level 3D editing, is on <a href="https://arxiv.org/abs/2610.02298">arXiv</a>.</p>
+          <p data-lang-zh><b>EditHero</b>（长程部件级 3D 编辑基准）已发布在 <a href="https://arxiv.org/abs/2610.02298">arXiv</a>。</p>
+        </li>
+        <li class="news-item">
+          <time datetime="2026-09">2026.09</time>
+          <p data-lang-en><b>Video-Mirai</b> is accepted to NeurIPS 2026.</p>
+          <p data-lang-zh><b>Video-Mirai</b> 被 NeurIPS 2026 接收。</p>
+        </li>
+        <li class="news-item">
+          <time datetime="2026-09">2026.09</time>
+          <p data-lang-en><b>WorldSculpt</b> and <b>KaiNinja</b> are on arXiv.</p>
+          <p data-lang-zh><b>WorldSculpt</b> 和 <b>KaiNinja</b> 已发布在 arXiv。</p>
+        </li>
+        <li class="news-item">
+          <time datetime="2026-09">2026.09</time>
+          <p data-lang-en>Joined <a href="https://alayalab.ai/">Alaya Lab</a> as a research intern.</p>
+          <p data-lang-zh>加入 <a href="https://alayalab.ai/">Alaya Lab</a> 担任研究实习生。</p>
+        </li>
+        <li class="news-item">
+          <time datetime="2026-06">2026.06</time>
+          <p data-lang-en>Released <b>Video-Mirai</b>: <a href="https://arxiv.org/abs/2606.03971">paper</a>, <a href="https://github.com/y0urOy/Video-Mirai">code</a> and <a href="https://huggingface.co/y0urOy/Video-Mirai">model</a>.</p>
+          <p data-lang-zh>发布 <b>Video-Mirai</b>：<a href="https://arxiv.org/abs/2606.03971">论文</a>、<a href="https://github.com/y0urOy/Video-Mirai">代码</a>和<a href="https://huggingface.co/y0urOy/Video-Mirai">模型</a>。</p>
+        </li>
+        <li class="news-item news-item--more">
+          <time datetime="2026-02">2026.02</time>
+          <p data-lang-en><b>Mirai</b> is accepted to CVPR 2026.</p>
+          <p data-lang-zh><b>Mirai</b> 被 CVPR 2026 接收。</p>
+        </li>
+        <li class="news-item news-item--more">
+          <time datetime="2026-01">2026.01</time>
+          <p data-lang-en>Released <b>Mirai</b>: <a href="https://arxiv.org/abs/2601.14671">paper</a> and <a href="https://github.com/y0urOy/Mirai-Code">code</a>.</p>
+          <p data-lang-zh>发布 <b>Mirai</b>：<a href="https://arxiv.org/abs/2601.14671">论文</a>和<a href="https://github.com/y0urOy/Mirai-Code">代码</a>。</p>
+        </li>
+        <li class="news-item news-item--more">
+          <time datetime="2024-10">2024.10</time>
+          <p data-lang-en>Started my Ph.D. at The University of Tokyo, supported by JST SPRING.</p>
+          <p data-lang-zh>进入东京大学攻读博士学位，获 JST SPRING 项目资助。</p>
+        </li>
+        <li class="news-item news-item--more">
+          <time datetime="2024-04">2024.04</time>
+          <p data-lang-en><b>BoostDream</b> is accepted to IJCAI 2024.</p>
+          <p data-lang-zh><b>BoostDream</b> 被 IJCAI 2024 接收。</p>
+        </li>
+      </ul>
+      <button class="more-btn js-only" id="news-more" type="button" aria-expanded="false" aria-controls="news-list"><span class="more-btn__more"><span data-lang-en>More</span><span data-lang-zh>更多</span></span><span class="more-btn__less"><span data-lang-en>Less</span><span data-lang-zh>收起</span></span></button>
+    </section>
+
+    <section class="landing-section" id="publications" aria-labelledby="publications-h">
+      <h2 class="section-label" id="publications-h"><span data-lang-en>Publications</span><span data-lang-zh>论文</span></h2>
+      <div class="pub-selected">
+        <h3 class="sr-only"><span data-lang-en>Selected</span><span data-lang-zh>代表作</span></h3>
+        <ol class="pub-list">
+          <li class="pub">
+            <a class="pub__thumb" href="https://y0uroy.github.io/Video-Mirai/" tabindex="-1"><img src="assets/img/video-mirai.webp" alt="Current frame, baseline, Video-Mirai and future frame for three prompts" lang="en" width="400" height="250" loading="lazy" decoding="async"></a>
+            <div class="pub__body">
+              <h4 class="pub__title" lang="en"><a href="https://y0uroy.github.io/Video-Mirai/">Video-Mirai: Autoregressive Video Diffusion Models Need Foresight</a></h4>
+              <p class="pub__authors" lang="en"><span class="me">Yonghao Yu</span>, Lang Huang<sup>†</sup>, Runyi Li, Zerun Wang, Toshihiko Yamasaki</p>
+              <p class="pub__summary" data-lang-en>A training-only foresight objective for autoregressive video diffusion: future segments supervise the current causal state during training, and inference cost stays the same.</p>
+              <p class="pub__summary" data-lang-zh>面向自回归视频扩散模型的纯训练期 foresight 目标：训练时用未来片段监督当前的因果状态，推理开销保持不变。</p>
+              <div class="pub__meta">
+                <span class="venue venue--pub" lang="en">NeurIPS 2026</span>
+                <div class="pub__links">
+                  <a href="https://arxiv.org/abs/2606.03971">arXiv</a>
+                  <a href="https://openreview.net/forum?id=0Oqbkn7POo">OpenReview</a>
+                  <a href="https://y0uroy.github.io/Video-Mirai/"><span data-lang-en>Project</span><span data-lang-zh>项目主页</span></a>
+                  <a href="https://github.com/y0urOy/Video-Mirai"><span data-lang-en>Code</span><span data-lang-zh>代码</span></a>
+                  <a href="https://huggingface.co/y0urOy/Video-Mirai"><span data-lang-en>Model</span><span data-lang-zh>模型</span></a>
+                  <button class="bib-btn js-only" type="button" aria-expanded="false" aria-controls="bib-video-mirai">BibTeX</button>
+                </div>
+              </div>
+              <details class="pub__bib" id="bib-video-mirai">
+                <summary>BibTeX</summary>
+                <div class="pub__bib-body"><pre lang="en"><code>@inproceedings{yu2026videomirai,
+  title     = {Video-Mirai: Autoregressive Video Diffusion Models Need Foresight},
+  author    = {Yu, Yonghao and Huang, Lang and Li, Runyi and Wang, Zerun and Yamasaki, Toshihiko},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2026}
+}</code></pre></div>
+              </details>
+            </div>
+          </li>
+          <li class="pub">
+            <a class="pub__thumb" href="https://y0uroy.github.io/Mirai/" tabindex="-1"><img src="assets/img/mirai.webp" alt="ImageNet samples from LlamaGen-B, +Mirai-I and +Mirai-E" lang="en" width="400" height="250" loading="lazy" decoding="async"></a>
+            <div class="pub__body">
+              <h4 class="pub__title" lang="en"><a href="https://y0uroy.github.io/Mirai/">Mirai: Autoregressive Visual Generation Needs Foresight</a></h4>
+              <p class="pub__authors" lang="en"><span class="me">Yonghao Yu</span>, Lang Huang<sup>†</sup>, Zerun Wang, Runyi Li, Toshihiko Yamasaki</p>
+              <p class="pub__summary" data-lang-en>Foresight for autoregressive image generation: aligning internal states with signals from future tokens on the 2D grid speeds up LlamaGen convergence by up to 10x, with no architecture change or inference overhead. (Mirai means future in Japanese.)</p>
+              <p class="pub__summary" data-lang-zh>为自回归图像生成引入 foresight：在二维网格上把内部状态与来自未来 token 的信号对齐，使 LlamaGen 的收敛最多加快 10 倍，且无需改动架构、不增加推理开销。（Mirai 在日语中意为“未来”。）</p>
+              <div class="pub__meta">
+                <span class="venue venue--pub" lang="en">CVPR 2026</span>
+                <div class="pub__links">
+                  <a href="https://openaccess.thecvf.com/content/CVPR2026/html/Yu_Mirai_Autoregressive_Visual_Generation_Needs_Foresight_CVPR_2026_paper.html"><span data-lang-en>Paper</span><span data-lang-zh>论文</span></a>
+                  <a href="https://arxiv.org/abs/2601.14671">arXiv</a>
+                  <a href="https://y0uroy.github.io/Mirai/"><span data-lang-en>Project</span><span data-lang-zh>项目主页</span></a>
+                  <a href="https://github.com/y0urOy/Mirai-Code"><span data-lang-en>Code</span><span data-lang-zh>代码</span></a>
+                  <button class="bib-btn js-only" type="button" aria-expanded="false" aria-controls="bib-mirai">BibTeX</button>
+                </div>
+              </div>
+              <details class="pub__bib" id="bib-mirai">
+                <summary>BibTeX</summary>
+                <div class="pub__bib-body"><pre lang="en"><code>@InProceedings{Yu_2026_CVPR,
+    author    = {Yu, Yonghao and Huang, Lang and Wang, Zerun and Li, Runyi and Yamasaki, Toshihiko},
+    title     = {Mirai: Autoregressive Visual Generation Needs Foresight},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2026},
+    pages     = {30511-30520}
+}</code></pre></div>
+              </details>
+            </div>
+          </li>
+          <li class="pub">
+            <a class="pub__thumb" href="https://alaya-lab.github.io/MeshAxiom/" tabindex="-1"><img src="assets/img/meshaxiom.webp" alt="Grid of generated meshes and five programmable space scenes" lang="en" width="400" height="250" loading="lazy" decoding="async"></a>
+            <div class="pub__body">
+              <h4 class="pub__title" lang="en"><a href="https://alaya-lab.github.io/MeshAxiom/">MeshAxiom: An Agent-Native 3D Foundation Stack for Programmable Worlds</a></h4>
+              <p class="pub__authors" lang="en"><span class="me">Yonghao Yu</span>, Ruihan Yu, Sho Kuno, Muyao Niu, Yu-Ju Tsai, Zheng-Hui Huang, Fengbo Lan, Guixu Lin, Runyi Li, Chuanhao Li, Ming-Hsuan Yang, Kaipeng Zhang, Zhixiang Wang</p>
+              <p class="pub__summary" data-lang-en>MeshAxiom-Base generates compact explicit meshes from one image and a requested face budget; file-based tools let agents inspect and edit them, and reuse them as modules in scene programs.</p>
+              <p class="pub__summary" data-lang-zh>MeshAxiom-Base 根据一张图像和指定的面数预算生成紧凑的显式网格；基于文件的工具让智能体能够检查、编辑这些网格，并在场景程序中把它们作为模块复用。</p>
+              <div class="pub__meta">
+                <span class="venue venue--proj"><span data-lang-en>Project 2026</span><span data-lang-zh>项目 2026</span></span>
+                <div class="pub__links">
+                  <a href="https://alaya-lab.github.io/MeshAxiom/"><span data-lang-en>Project</span><span data-lang-zh>项目主页</span></a>
+                  <a href="https://github.com/AlayaLab/MeshAxiom"><span data-lang-en>Code</span><span data-lang-zh>代码</span></a>
+                  <a href="https://huggingface.co/AlayaLab/MeshAxiom-Base"><span data-lang-en>Model</span><span data-lang-zh>模型</span></a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="pub">
+            <a class="pub__thumb" href="https://www.ijcai.org/proceedings/2024/598" tabindex="-1"><img src="assets/img/boostdream.webp" alt="Shap-E assets next to BoostDream refinements" lang="en" width="400" height="250" loading="lazy" decoding="async"></a>
+            <div class="pub__body">
+              <h4 class="pub__title" lang="en"><a href="https://www.ijcai.org/proceedings/2024/598">BoostDream: Efficient Refining for High-Quality Text-to-3D Generation from Multi-View Diffusion</a></h4>
+              <p class="pub__authors" lang="en"><span class="me">Yonghao Yu</span><sup>†</sup>, Shunan Zhu, Huai Qin, Haorui Li</p>
+              <p class="pub__summary" data-lang-en>A plug-and-play refiner that turns coarse feed-forward 3D assets into high-quality ones with multi-view SDS guided by normal maps, avoiding the Janus problem.</p>
+              <p class="pub__summary" data-lang-zh>一个即插即用的精炼方法，借助法线图引导的多视角 SDS，把前馈生成的粗糙 3D 资产提升为高质量资产，并避免 Janus 问题。</p>
+              <div class="pub__meta">
+                <span class="venue venue--pub" lang="en">IJCAI 2024</span>
+                <div class="pub__links">
+                  <a href="https://www.ijcai.org/proceedings/2024/598"><span data-lang-en>Paper</span><span data-lang-zh>论文</span></a>
+                  <a href="https://arxiv.org/abs/2401.16764">arXiv</a>
+                  <button class="bib-btn js-only" type="button" aria-expanded="false" aria-controls="bib-boostdream">BibTeX</button>
+                </div>
+              </div>
+              <details class="pub__bib" id="bib-boostdream">
+                <summary>BibTeX</summary>
+                <div class="pub__bib-body"><pre lang="en"><code>@inproceedings{ijcai2024p598,
+  title     = {BoostDream: Efficient Refining for High-Quality Text-to-3D Generation from Multi-View Diffusion},
+  author    = {Yu, Yonghao and Zhu, Shunan and Qin, Huai and Li, Haorui},
+  booktitle = {Proceedings of the Thirty-Third International Joint Conference on
+               Artificial Intelligence, {IJCAI-24}},
+  publisher = {International Joint Conferences on Artificial Intelligence Organization},
+  editor    = {Kate Larson},
+  pages     = {5407--5415},
+  year      = {2024},
+  month     = {8},
+  note      = {Main Track},
+  doi       = {10.24963/ijcai.2024/598},
+  url       = {https://doi.org/10.24963/ijcai.2024/598},
+}</code></pre></div>
+              </details>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="pub-years">
+        <div class="pub-year">
+          <h3 class="pub-year__label">2026</h3>
+          <ol class="pub-list">
+            <li class="pub pub--compact">
+              <h4 class="pub__title" lang="en"><a href="https://alaya-lab.github.io/EditHero/">EditHero: A Benchmark for Long-Horizon Part-Level 3D Editing and Vibe Modeling</a></h4>
+              <p class="pub__authors" lang="en">Ruihan Yu<sup>*</sup>, Yu-Ju Tsai<sup>*</sup>, Muyao Niu, Runyi Li, Lian Fu, Hanqing Liu, Zheng-Hui Huang, <span class="me">Yonghao Yu</span>, Sho Kuno, Ming-Hsuan Yang<sup>†</sup>, Kaipeng Zhang<sup>†</sup>, Zhixiang Wang<sup>†</sup></p>
+              <p class="pub__summary" data-lang-en>A benchmark for long-horizon, part-level 3D editing with an exact target after every edit, comparing 3D editors with LLM and VLM agents that edit meshes through code.</p>
+              <p class="pub__summary" data-lang-zh>一个长程、部件级的 3D 编辑基准，每一步编辑都有精确的目标，用于比较 3D 编辑方法与通过代码编辑网格的 LLM 和 VLM 智能体。</p>
+              <div class="pub__meta">
+                <span class="venue" lang="en">arXiv 2026</span>
+                <div class="pub__links">
+                  <a href="https://arxiv.org/abs/2610.02298">arXiv</a>
+                  <a href="https://alaya-lab.github.io/EditHero/"><span data-lang-en>Project</span><span data-lang-zh>项目主页</span></a>
+                  <a href="https://github.com/AlayaLab/EditHero"><span data-lang-en>Code</span><span data-lang-zh>代码</span></a>
+                  <a href="https://huggingface.co/datasets/AlayaLab/EditHero"><span data-lang-en>Data</span><span data-lang-zh>数据</span></a>
+                  <button class="bib-btn js-only" type="button" aria-expanded="false" aria-controls="bib-edithero">BibTeX</button>
+                </div>
+              </div>
+              <details class="pub__bib" id="bib-edithero">
+                <summary>BibTeX</summary>
+                <div class="pub__bib-body"><pre lang="en"><code>@misc{yu2026editherobenchmarklonghorizonpartlevel,
+      title={EditHero: A Benchmark for Long-Horizon Part-Level 3D Editing and Vibe Modeling},
+      author={Ruihan Yu and Yu-Ju Tsai and Muyao Niu and Runyi Li and Lian Fu and Hanqing Liu and Zheng-Hui Huang and Yonghao Yu and Sho Kuno and Ming-Hsuan Yang and Kaipeng Zhang and Zhixiang Wang},
+      year={2026},
+      eprint={2610.02298},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2610.02298},
+}</code></pre></div>
+              </details>
+            </li>
+            <li class="pub pub--compact">
+              <h4 class="pub__title" lang="en"><a href="https://alaya-lab.github.io/KaiNinja/">KaiNinja: Extending Native 3D Generators to the Part Level</a></h4>
+              <p class="pub__authors" lang="en">Ruihan Yu, Lian Fu, Muyao Niu, Zheng-hui Huang, Yu-Ju Tsai, Sho Kuno, Fengbo Lan, <span class="me">Yonghao Yu</span>, Erwin Wu, Ming-Hsuan Yang, Kaipeng Zhang<sup>†</sup>, Zhixiang Wang<sup>†</sup></p>
+              <p class="pub__summary" data-lang-en>Extends a native image-to-3D generator (TRELLIS.2) to the part level, generating separate part meshes from one image without masks or a segmenter.</p>
+              <p class="pub__summary" data-lang-zh>把原生的图像到 3D 生成器（TRELLIS.2）扩展到部件级，无需掩码或分割器即可从单张图像生成分离的部件网格。</p>
+              <div class="pub__meta">
+                <span class="venue" lang="en">arXiv 2026</span>
+                <div class="pub__links">
+                  <a href="https://arxiv.org/abs/2609.15659">arXiv</a>
+                  <a href="https://alaya-lab.github.io/KaiNinja/"><span data-lang-en>Project</span><span data-lang-zh>项目主页</span></a>
+                  <button class="bib-btn js-only" type="button" aria-expanded="false" aria-controls="bib-kaininja">BibTeX</button>
+                </div>
+              </div>
+              <details class="pub__bib" id="bib-kaininja">
+                <summary>BibTeX</summary>
+                <div class="pub__bib-body"><pre lang="en"><code>@misc{yu2026kaininjaextendingnative3d,
+      title={KaiNinja: Extending Native 3D Generators to the Part Level},
+      author={Ruihan Yu and Lian Fu and Muyao Niu and Zheng-hui Huang and Yu-Ju Tsai and Sho Kuno and Fengbo Lan and Yonghao Yu and Erwin Wu and Ming-Hsuan Yang and Kaipeng Zhang and Zhixiang Wang},
+      year={2026},
+      eprint={2609.15659},
+      archivePrefix={arXiv},
+      primaryClass={cs.GR},
+      url={https://arxiv.org/abs/2609.15659},
+}</code></pre></div>
+              </details>
+            </li>
+            <li class="pub pub--compact">
+              <h4 class="pub__title" lang="en"><a href="https://alaya-lab.github.io/WorldSculpt/">WorldSculpt: Generating Compositional Worlds from Grounded Videos</a></h4>
+              <p class="pub__authors" lang="en">Muyao Niu, Jixuan He, Ruihan Yu, Lian Fu, <span class="me">Yonghao Yu</span>, Zheng-Hui Huang, Yifan Zhan, Fengbo Lan, Yongtao Ge, Yinqiang Zheng, Kaipeng Zhang<sup>†</sup>, Zhixiang Wang<sup>†</sup></p>
+              <p class="pub__summary" data-lang-en>Generates cluttered scenes with hundreds of objects as individual meshes in a shared world frame by adapting a single-object 3D prior to multi-view observations.</p>
+              <p class="pub__summary" data-lang-zh>把单物体 3D 先验适配到多视角观测，将包含上百个物体的杂乱场景生成为共享世界坐标系中的独立网格。</p>
+              <div class="pub__meta">
+                <span class="venue" lang="en">arXiv 2026</span>
+                <div class="pub__links">
+                  <a href="https://arxiv.org/abs/2609.05416">arXiv</a>
+                  <a href="https://alaya-lab.github.io/WorldSculpt/"><span data-lang-en>Project</span><span data-lang-zh>项目主页</span></a>
+                  <a href="https://github.com/AlayaLab/WorldSculpt"><span data-lang-en>Code</span><span data-lang-zh>代码</span></a>
+                  <a href="https://huggingface.co/AlayaLab/WorldSculpt"><span data-lang-en>Model</span><span data-lang-zh>模型</span></a>
+                  <a href="https://huggingface.co/datasets/AlayaLab/Worldsculpt_data"><span data-lang-en>Data</span><span data-lang-zh>数据</span></a>
+                  <button class="bib-btn js-only" type="button" aria-expanded="false" aria-controls="bib-worldsculpt">BibTeX</button>
+                </div>
+              </div>
+              <details class="pub__bib" id="bib-worldsculpt">
+                <summary>BibTeX</summary>
+                <div class="pub__bib-body"><pre lang="en"><code>@misc{niu2026worldsculptgeneratingcompositionalworlds,
+      title={WorldSculpt: Generating Compositional Worlds from Grounded Videos},
+      author={Muyao Niu and Jixuan He and Ruihan Yu and Lian Fu and Yonghao Yu and Zheng-Hui Huang and Yifan Zhan and Fengbo Lan and Yongtao Ge and Yinqiang Zheng and Kaipeng Zhang and Zhixiang Wang},
+      year={2026},
+      eprint={2609.05416},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2609.05416},
+}</code></pre></div>
+              </details>
+            </li>
+            <li class="pub pub--compact">
+              <h4 class="pub__title" lang="en"><a href="https://doi.org/10.1109/IJCNN69854.2026.11729361">FedDetox: Robust Federated SLM Alignment via On-Device Data Sanitization</a></h4>
+              <p class="pub__authors" lang="en">Shunan Zhu, Jiawei Chen, <span class="me">Yonghao Yu</span>, Hideya Ochiai</p>
+              <p class="pub__summary" data-lang-en>Federated alignment for small language models: on-device classifiers distilled from safety-aligned teachers replace unsafe client samples, keeping safety close to centralized training.</p>
+              <p class="pub__summary" data-lang-zh>面向小语言模型的联邦对齐：从安全对齐的教师模型蒸馏出端侧分类器，替换不安全的客户端样本，使安全性接近集中式训练。</p>
+              <div class="pub__meta">
+                <span class="venue venue--pub" lang="en">IJCNN 2026</span>
+                <div class="pub__links">
+                  <a href="https://doi.org/10.1109/IJCNN69854.2026.11729361"><span data-lang-en>Paper</span><span data-lang-zh>论文</span></a>
+                  <a href="https://arxiv.org/abs/2604.06833">arXiv</a>
+                  <button class="bib-btn js-only" type="button" aria-expanded="false" aria-controls="bib-feddetox">BibTeX</button>
+                </div>
+              </div>
+              <details class="pub__bib" id="bib-feddetox">
+                <summary>BibTeX</summary>
+                <div class="pub__bib-body"><pre lang="en"><code>@inproceedings{zhu2026feddetox,
+  title     = {FedDetox: Robust Federated SLM Alignment via On-Device Data Sanitization},
+  author    = {Zhu, Shunan and Chen, Jiawei and Yu, Yonghao and Ochiai, Hideya},
+  booktitle = {2026 International Joint Conference on Neural Networks (IJCNN)},
+  pages     = {1--8},
+  year      = {2026},
+  publisher = {IEEE},
+  doi       = {10.1109/IJCNN69854.2026.11729361}
+}</code></pre></div>
+              </details>
+            </li>
+          </ol>
+        </div>
+        <div class="pub-year">
+          <h3 class="pub-year__label">2024</h3>
+          <ol class="pub-list">
+            <li class="pub pub--compact">
+              <h4 class="pub__title" lang="en"><a href="https://arxiv.org/abs/2401.17746">Logit Poisoning Attack in Distillation-based Federated Learning and its Countermeasures</a></h4>
+              <p class="pub__authors" lang="en"><span class="me">Yonghao Yu</span><sup>†</sup>, Shunan Zhu, Jinglu Hu</p>
+              <p class="pub__summary" data-lang-en>A two-stage logit poisoning attack on distillation-based federated learning, and a defense that compares uploaded logits with estimated benign ones.</p>
+              <p class="pub__summary" data-lang-zh>针对基于蒸馏的联邦学习的两阶段 logit 投毒攻击，以及一种把上传的 logit 与估计的良性 logit 进行比较的防御方法。</p>
+              <div class="pub__meta">
+                <span class="venue" lang="en">arXiv 2024</span>
+                <div class="pub__links">
+                  <a href="https://arxiv.org/abs/2401.17746">arXiv</a>
+                  <button class="bib-btn js-only" type="button" aria-expanded="false" aria-controls="bib-logit-poisoning">BibTeX</button>
+                </div>
+              </div>
+              <details class="pub__bib" id="bib-logit-poisoning">
+                <summary>BibTeX</summary>
+                <div class="pub__bib-body"><pre lang="en"><code>@article{DBLP:journals/corr/abs-2401-17746,
+  author       = {Yonghao Yu and
+                  Shunan Zhu and
+                  Jinglu Hu},
+  title        = {Logit Poisoning Attack in Distillation-based Federated Learning and
+                  its Countermeasures},
+  journal      = {CoRR},
+  volume       = {abs/2401.17746},
+  year         = {2024},
+  url          = {https://doi.org/10.48550/arXiv.2401.17746},
+  doi          = {10.48550/ARXIV.2401.17746},
+  eprinttype   = {arXiv},
+  eprint       = {2401.17746},
+  timestamp    = {Tue, 04 Nov 2025 12:45:08 +0100},
+  biburl       = {https://dblp.org/rec/journals/corr/abs-2401-17746.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}</code></pre></div>
+              </details>
+            </li>
+          </ol>
+        </div>
+        <div class="pub-year">
+          <h3 class="pub-year__label">2022</h3>
+          <ol class="pub-list">
+            <li class="pub pub--compact">
+              <h4 class="pub__title" lang="en"><a href="https://doi.org/10.1007/978-3-031-10989-8_22">Spotlight on Video Piracy Websites: Familial Analysis Based on Multidimensional Features</a></h4>
+              <p class="pub__authors" lang="en">Chenlin Wang, <span class="me">Yonghao Yu</span>, Ao Pu, Fan Shi<sup>†</sup>, Cheng Huang</p>
+              <p class="pub__summary" data-lang-en>Proactively discovers video piracy websites with 96.2% detection accuracy and groups them into families from layout, content and infrastructure features.</p>
+              <p class="pub__summary" data-lang-zh>主动发现盗版视频网站，检测准确率达 96.2%，并基于页面布局、内容和基础设施特征把这些网站聚类为家族。</p>
+              <div class="pub__meta">
+                <span class="venue venue--pub" lang="en">KSEM 2022</span>
+                <div class="pub__links">
+                  <a href="https://doi.org/10.1007/978-3-031-10989-8_22"><span data-lang-en>Paper</span><span data-lang-zh>论文</span></a>
+                  <button class="bib-btn js-only" type="button" aria-expanded="false" aria-controls="bib-ksem2022">BibTeX</button>
+                </div>
+              </div>
+              <details class="pub__bib" id="bib-ksem2022">
+                <summary>BibTeX</summary>
+                <div class="pub__bib-body"><pre lang="en"><code>@inproceedings{DBLP:conf/ksem/WangYPSH22,
+  author       = {Chenlin Wang and
+                  Yonghao Yu and
+                  Ao Pu and
+                  Fan Shi and
+                  Cheng Huang},
+  editor       = {G{\'{e}}rard Memmi and
+                  Baijian Yang and
+                  Linghe Kong and
+                  Tianwei Zhang and
+                  Meikang Qiu},
+  title        = {Spotlight on Video Piracy Websites: Familial Analysis Based on Multidimensional
+                  Features},
+  booktitle    = {Knowledge Science, Engineering and Management - 15th International
+                  Conference, {KSEM} 2022, Singapore, August 6-8, 2022, Proceedings,
+                  Part {III}},
+  series       = {Lecture Notes in Computer Science},
+  volume       = {13370},
+  pages        = {272--288},
+  publisher    = {Springer},
+  year         = {2022},
+  url          = {https://doi.org/10.1007/978-3-031-10989-8\_22},
+  doi          = {10.1007/978-3-031-10989-8\_22},
+  timestamp    = {Sat, 15 Nov 2025 13:47:38 +0100},
+  biburl       = {https://dblp.org/rec/conf/ksem/WangYPSH22.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}</code></pre></div>
+              </details>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <p class="pub-legend" data-lang-en><span><sup>*</sup>equal contribution</span><span><sup>†</sup>corresponding author</span></p>
+      <p class="pub-legend" data-lang-zh><span><sup>*</sup>同等贡献</span><span><sup>†</sup>通讯作者</span></p>
+    </section>
+
+    <section class="landing-section" id="education" aria-labelledby="education-h">
+      <h2 class="section-label" id="education-h"><span data-lang-en>Education</span><span data-lang-zh>教育经历</span></h2>
+      <ul class="cv-list">
+        <li class="cv-row">
+          <div class="cv-row__main">
+            <p class="cv-row__title" data-lang-en><a href="https://www.u-tokyo.ac.jp/en/">The University of Tokyo</a></p>
+            <p class="cv-row__title" data-lang-zh><a href="https://www.u-tokyo.ac.jp/en/">东京大学</a></p>
+            <p class="cv-row__sub" data-lang-en>Ph.D. student, Graduate School of Information Science and Technology (Yamasaki Lab)</p>
+            <p class="cv-row__sub" data-lang-zh>博士在读，信息理工学系研究科（山崎研究室）</p>
+          </div>
+          <p class="cv-row__meta"><span data-lang-en>2024.10 – present</span><span data-lang-zh>2024.10 – 至今</span></p>
+        </li>
+        <li class="cv-row">
+          <div class="cv-row__main">
+            <p class="cv-row__title" data-lang-en><a href="https://www.waseda.jp/top/en/">Waseda University</a></p>
+            <p class="cv-row__title" data-lang-zh><a href="https://www.waseda.jp/top/en/">早稻田大学</a></p>
+            <p class="cv-row__sub" data-lang-en>M.Eng., Graduate School of Information, Production and Systems</p>
+            <p class="cv-row__sub" data-lang-zh>工学硕士，信息生产系统研究科</p>
+          </div>
+          <p class="cv-row__meta">2022.10 – 2024.09</p>
+        </li>
+        <li class="cv-row">
+          <div class="cv-row__main">
+            <p class="cv-row__title" data-lang-en><a href="https://www.scu.edu.cn/">Sichuan University</a></p>
+            <p class="cv-row__title" data-lang-zh><a href="https://www.scu.edu.cn/">四川大学</a></p>
+            <p class="cv-row__sub" data-lang-en>B.Eng. in Cyber Science and Engineering</p>
+            <p class="cv-row__sub" data-lang-zh>工学学士，网络空间安全</p>
+          </div>
+          <p class="cv-row__meta">2019.09 – 2023.06</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="landing-section" id="experience" aria-labelledby="experience-h">
+      <h2 class="section-label" id="experience-h"><span data-lang-en>Experience</span><span data-lang-zh>工作经历</span></h2>
+      <ul class="cv-list">
+        <li class="cv-row">
+          <div class="cv-row__main">
+            <p class="cv-row__title" data-lang-en><a href="https://alayalab.ai/">Research Intern, Alaya Lab</a></p>
+            <p class="cv-row__title" data-lang-zh><a href="https://alayalab.ai/">Alaya Lab 研究实习生</a></p>
+            <p class="cv-row__sub" data-lang-en>3D generation and programmable worlds.</p>
+            <p class="cv-row__sub" data-lang-zh>3D 生成与可编程世界。</p>
+          </div>
+          <p class="cv-row__meta"><span data-lang-en>2026.09 – present</span><span data-lang-zh>2026.09 – 至今</span></p>
+        </li>
+        <li class="cv-row">
+          <div class="cv-row__main">
+            <p class="cv-row__title" data-lang-en>Research Assistant, The University of Tokyo</p>
+            <p class="cv-row__title" data-lang-zh>东京大学 研究助理</p>
+            <p class="cv-row__sub" data-lang-en>Large-scale visual generative modeling under the Collaborative Industry Program.</p>
+            <p class="cv-row__sub" data-lang-zh>在产学合作项目中从事大规模视觉生成模型研究。</p>
+          </div>
+          <p class="cv-row__meta"><span data-lang-en>2024.10 – present</span><span data-lang-zh>2024.10 – 至今</span></p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="landing-section" id="honors" aria-labelledby="honors-h">
+      <h2 class="section-label" id="honors-h"><span data-lang-en>Honors</span><span data-lang-zh>荣誉与资助</span></h2>
+      <ul class="cv-list">
+        <li class="cv-row">
+          <div class="cv-row__main">
+            <p class="cv-row__title" data-lang-en><a href="https://www.jst.go.jp/jisedai/spring/en/">JST SPRING Program</a></p>
+            <p class="cv-row__title" data-lang-zh><a href="https://www.jst.go.jp/jisedai/spring/en/">JST SPRING 项目</a></p>
+            <p class="cv-row__sub" data-lang-en>JST Support for Pioneering Research Initiated by the Next Generation</p>
+            <p class="cv-row__sub" data-lang-zh>日本科学技术振兴机构（JST）次世代研究者挑战性研究项目</p>
+          </div>
+          <p class="cv-row__meta">2024 – 2027</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="landing-epigraphs" data-reveal-on-scroll>
+      <figure class="epigraph">
+        <span class="epigraph__year">1843</span>
+        <blockquote>
+          <p data-lang-en>Life can only be understood backwards; but it must be lived forwards.</p>
+          <p data-lang-zh>人生只能向后理解，但必须向前生活。</p>
+        </blockquote>
+        <figcaption><span data-lang-en>Søren Kierkegaard, journal entry</span><span data-lang-zh>索伦·克尔凯郭尔，日记</span></figcaption>
+      </figure>
+      <figure class="epigraph">
+        <span class="epigraph__year">1950</span>
+        <blockquote>
+          <p data-lang-en>We can only see a short distance ahead, but we can see plenty there that needs to be done.</p>
+          <p data-lang-zh>我们只能看到前方不远处，但已能看到那里有许多事情需要去做。</p>
+        </blockquote>
+        <figcaption><span data-lang-en>Alan Turing, Computing Machinery and Intelligence</span><span data-lang-zh>艾伦·图灵，《计算机器与智能》</span></figcaption>
+      </figure>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 <span data-lang-en>Yonghao Yu</span><span data-lang-zh>于永昊</span></p>
+    <ul class="icon-row">
+      <li><a class="icon-link icon-link--sm" href="mailto:yuyonghao@g.ecc.u-tokyo.ac.jp" title="Email" data-title-en="Email" data-title-zh="邮箱"><svg aria-hidden="true" focusable="false"><use href="#i-mail"></use></svg><span class="sr-only" data-lang-en>Email</span><span class="sr-only" data-lang-zh>邮箱</span></a></li>
+      <li><a class="icon-link icon-link--sm" href="https://scholar.google.com/citations?user=lwuwuAYAAAAJ&amp;hl=en" rel="me" title="Google Scholar"><svg aria-hidden="true" focusable="false"><use href="#i-scholar"></use></svg><span class="sr-only">Google Scholar</span></a></li>
+      <li><a class="icon-link icon-link--sm" href="https://github.com/y0urOy" rel="me" title="GitHub"><svg aria-hidden="true" focusable="false"><use href="#i-github"></use></svg><span class="sr-only">GitHub</span></a></li>
+      <li><a class="icon-link icon-link--sm" href="https://openreview.net/profile?id=~Yonghao_Yu2" rel="me" title="OpenReview"><span class="icon-text" aria-hidden="true">OR</span><span class="sr-only">OpenReview</span></a></li>
+      <li><a class="icon-link icon-link--sm" href="https://huggingface.co/y0urOy" rel="me" title="Hugging Face"><svg aria-hidden="true" focusable="false"><use href="#i-hf"></use></svg><span class="sr-only">Hugging Face</span></a></li>
+      <li><a class="icon-link icon-link--sm" href="cv.pdf" title="CV" type="application/pdf" hreflang="en"><span class="icon-text" aria-hidden="true">CV</span><span class="sr-only">CV</span></a></li>
+    </ul>
+  </footer>
+
+  <template id="copy-button"><button class="copy-btn" type="button"><span class="copy-btn__idle"><span data-lang-en>Copy</span><span data-lang-zh>复制</span></span><span class="copy-btn__done"><span data-lang-en>Copied</span><span data-lang-zh>已复制</span></span></button></template>
+  <p class="sr-only" id="copy-status" role="status"></p>
+</body>
+</html>

@@ -1,0 +1,151 @@
+% Yonghao Yu, CV (public version: no phone number).
+% Layout follows the original resume (Jake Gutierrez's resume template).
+% Build: xelatex cv.tex   (needs fonts/NotoSerifJP-Regular.otf for the CJK name line)
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[letterpaper,top=0.5in,bottom=0.5in,left=0.5in,right=0.5in,headheight=0pt,headsep=0pt,footskip=0pt]{geometry}
+\usepackage{fontspec}
+\newfontfamily\cjkfont{NotoSerifJP-Regular.otf}[Path=./fonts/, Scale=0.92]
+\usepackage{latexsym}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+
+\hypersetup{
+  pdftitle={Yonghao Yu - CV},
+  pdfauthor={Yonghao Yu},
+  pdfsubject={Curriculum Vitae},
+  pdfkeywords={Yonghao Yu, The University of Tokyo, visual generation}
+}
+
+\pagestyle{empty}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumePaper}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l}
+      \textbf{#1} \\
+      \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+\begin{center}
+    \textbf{\Huge Yonghao Yu} \\ \vspace{3pt}
+    \small {\cjkfont 永昊 于} $|$ {\cjkfont ヨンハオ ユ} \\ \vspace{1pt}
+    \small \href{mailto:yuyonghao@g.ecc.u-tokyo.ac.jp}{yuyonghao@g.ecc.u-tokyo.ac.jp}
+\end{center}
+
+\section{Biography}
+\small{I am a second-year Ph.D. student from Yamasaki Lab, the University of Tokyo. My recent research mainly focuses on computer vision, including \textbf{image, video and 3D generation}.}
+
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {The University of Tokyo}{Japan}
+      {Ph.D. Student, Graduate School of Information Science and Technology, Yamasaki Laboratory}{Oct. 2024 -- Sep. 2027}
+    \resumeSubheading
+      {Waseda University}{Japan}
+      {Master of Engineering, Graduate School of Information, Production and Systems}{Oct. 2022 -- Sep. 2024}
+    \resumeSubheading
+      {Sichuan University}{China}
+      {Bachelor of Engineering in Cyber Science and Engineering}{Sep. 2019 -- Jun. 2023}
+  \resumeSubHeadingListEnd
+
+\section{Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Research Assistant}{}
+      {The University of Tokyo}{Oct. 2024 -- Present}
+      \resumeItemListStart
+        \resumeItem{Conduct research on large-scale visual generative modeling under the Collaborative Industry Program.}
+        \resumeItem{Optimize multi-node distributed training on A100/H100 clusters for visual generative modeling.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+\section{Publications}
+  \resumeSubHeadingListStart
+    \resumePaper
+      {Mirai: Autoregressive Visual Generation Needs Foresight}
+      {\textbf{Yonghao Yu}, Lang Huang, Zerun Wang, Runyi Li, Toshihiko Yamasaki}
+      \resumeItemListStart
+        \resumeItem{In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2026.}
+        \resumeItem{Proposed Mirai, a general foresight-based training framework for visual autoregressive models without architecture changes or inference overhead. Achieving up to 10$\times$ faster convergence and reduced ImageNet FID.}
+      \resumeItemListEnd
+    \resumePaper
+      {BoostDream: Efficient Refining for High-Quality Text-to-3D Generation from Multi-View Diffusion}
+      {\textbf{Yonghao Yu}, Shunan Zhu, Huai Qin, Haorui Li}
+      \resumeItemListStart
+        \resumeItem{In Proceedings of the 33rd International Joint Conference on Artificial Intelligence, 2024.}
+        \resumeItem{Developed BoostDream, an efficient 3D refinement method integrating feed-forward generation and multi-view SDS, significantly improving quality and efficiency in text-to-3D synthesis.}
+      \resumeItemListEnd
+    \resumePaper
+      {Spotlight on Video Piracy Websites: Familial Analysis Based on Multidimensional Features}
+      {Chenlin Wang, \textbf{Yonghao Yu}, Ao Pu, Fan Shi, Cheng Huang}
+      \resumeItemListStart
+        \resumeItem{In Proceedings of the 15th International Conference on Knowledge Science, Engineering and Management, 2022.}
+        \resumeItem{Proposed a proactive detection and clustering framework for video piracy websites, achieving 96.2\% detection accuracy and enabling comprehensive family-level analysis across layout, content, and infrastructure features.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+\section{Projects}
+  \resumeSubHeadingListStart
+    \resumePaper
+      {Logit Poisoning Attack in Distillation-based Federated Learning and its Countermeasures}
+      {\textbf{Yonghao Yu}, Shunan Zhu, Jinglu Hu}
+      \resumeItemListStart
+        \resumeItem{arXiv:2401.17746, 2024.}
+        \resumeItem{Proposed a two-stage logit poisoning attack targeting knowledge distillation in federated learning, and introduced an efficient defense algorithm based on benign logit distance estimation, demonstrating significant attack effectiveness and robust mitigation.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+\section{Language and Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Programming Languages}{: Python, Shell} \\
+     \textbf{Skills and Platforms}{: Pytorch, Linux.} \\
+     \textbf{Languages}{: Chinese: Native, English: Fluent (TOEFL 94)} \\
+     JST Support for Pioneering Research Initiated by the Next Generation (SPRING) Program, 2024-2027
+    }}
+ \end{itemize}
+
+\end{document}

@@ -1,0 +1,839 @@
+/* Yonghao Yu, personal homepage.
+   One narrow monospace column in the shokuno5 design family (values re-implemented from the
+   documented tokens; no code copied). Bilingual: every translatable text has an English and a
+   Chinese sibling marked data-lang-en / data-lang-zh; <html data-lang> decides which is shown. */
+
+/* 1. Tokens ---------------------------------------------------------------------------------- */
+:root {
+  --font-mono: "IBM Plex Mono", "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  --font-cjk: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+  --font-name: "IBM Plex Mono", "IBM Plex Sans JP", "Hiragino Sans", "Yu Gothic", "PingFang SC", "Microsoft YaHei", sans-serif;
+
+  --text-xs: .75rem;      /* 12px: labels, dates, meta, badges */
+  --text-sm: .8125rem;    /* 13px: nav, news, authors, quotes */
+  --text-base: .875rem;   /* 14px: body, titles, subtitles */
+  --text-2xl: 1.75rem;    /* 28px: the name */
+
+  --content-width: 640px;
+  --nav-height: 3.5rem;
+  --gutter: 3.5rem;       /* date / year column shared by news, publications by year, epigraphs */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  --upper: uppercase;     /* switched off in Chinese: never uppercase CJK */
+  --track-heading: -.02em;
+  --track-name: -.03em;   /* never negative tracking on CJK, see :root[data-lang="zh"] */
+
+  color-scheme: light;
+  --bg: #fafaf8;
+  --bg-surface: #ffffff;
+  --fg: #1a1a1a;
+  --fg-muted: #555555;
+  --fg-faint: #6e6e6e;
+  --border: #e0e0e0;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --code-bg: #f3f3f0;
+  --venue-pub: #3a66bb;        /* evergreen badge tone: accepted or published */
+  --venue-pub-line: #5b8def;
+  --venue-proj: #4a7a40;       /* seedling badge tone: project release, paper forthcoming */
+  --venue-proj-line: #88b67e;
+  --thumb-filter: none;
+  --focus-ring: 2px solid var(--accent);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121212;
+  --bg-surface: #1e1e1e;
+  --fg: #e0e0e0;
+  --fg-muted: #a0a0a0;
+  --fg-faint: #8a8a8a;
+  --border: #2e2e2e;
+  --accent: #5b8def;
+  --accent-hover: #7ca5f5;
+  --code-bg: #1a1a1a;
+  --venue-pub: #5b8def;
+  --venue-pub-line: #4070cc;
+  --venue-proj: #88b67e;
+  --venue-proj-line: #5a8a50;
+  --thumb-filter: brightness(.88);
+}
+
+/* Without JavaScript there is no data-theme: follow the system setting. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: #121212;
+    --bg-surface: #1e1e1e;
+    --fg: #e0e0e0;
+    --fg-muted: #a0a0a0;
+    --fg-faint: #8a8a8a;
+    --border: #2e2e2e;
+    --accent: #5b8def;
+    --accent-hover: #7ca5f5;
+    --code-bg: #1a1a1a;
+    --venue-pub: #5b8def;
+    --venue-pub-line: #4070cc;
+    --venue-proj: #88b67e;
+    --venue-proj-line: #5a8a50;
+    --thumb-filter: brightness(.88);
+  }
+}
+
+:root[data-lang="zh"] {
+  --upper: none;
+  --track-heading: 0;
+  --track-name: .04em;
+}
+
+/* 2. Language switch: hide the sibling that is not in the current language ----------------- */
+:root:not([data-lang="zh"]) [data-lang-zh],
+:root[data-lang="zh"] [data-lang-en] {
+  display: none !important;
+}
+
+/* Controls that only work with JavaScript stay out of the no-JS page. */
+:root:not(.js) .js-only {
+  display: none !important;
+}
+
+/* 3. Base ------------------------------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chinese: Plex Mono for Latin, Noto Sans SC (loaded only in this mode) for CJK. */
+:root[data-lang="zh"] body {
+  font-family: "IBM Plex Mono", var(--font-cjk);
+}
+
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+ul, ol { list-style: none; padding: 0; }
+pre, code { font-family: var(--font-mono); }
+
+h1, h2, h3, h4 {
+  font-size: inherit;
+  line-height: 1.25;
+  font-weight: 500;
+  color: var(--fg);
+  letter-spacing: var(--track-heading);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover { color: var(--accent-hover); }
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+::selection { background: color-mix(in srgb, var(--accent) 25%, transparent); }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: .5rem;
+  z-index: 100;
+  padding: .5rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--bg);              /* the reference used #fff, 3.23:1 on the dark accent */
+  font-size: var(--text-sm);
+}
+.skip-link:hover { color: var(--bg); }
+.skip-link:focus { top: .5rem; }
+
+/* 4. Header ---------------------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-nav {
+  max-width: var(--content-width);
+  height: var(--nav-height);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.site-nav__home {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--fg);
+  white-space: nowrap;
+}
+.site-nav__home:hover { color: var(--accent); }
+
+.site-nav__links {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.site-nav__links a {
+  padding: .2rem 0;
+  border-bottom: 1.5px solid transparent;
+  font-size: var(--text-sm);
+  letter-spacing: .04em;
+  text-transform: var(--upper);
+  color: var(--fg-muted);
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+}
+.site-nav__links a:hover {
+  color: var(--fg);
+  border-bottom-color: var(--accent);
+}
+
+.site-nav__toggles {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+/* Round pills: the theme toggle of the reference, and the language toggle in the same shape. */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  padding: 0 .45rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: none;
+  color: var(--fg-muted);
+  font-size: var(--text-sm);
+  line-height: 1;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.toggle:hover {
+  color: var(--fg);
+  border-color: var(--fg-muted);
+}
+
+.theme-toggle { font-family: var(--font-mono); }   /* the moon / sun come from a system font, as on the reference */
+:root[data-theme="dark"] .theme-toggle__moon,
+:root:not([data-theme="dark"]) .theme-toggle__sun { display: none; }
+
+.lang-toggle { font-family: var(--font-name); letter-spacing: .02em; }
+.lang-toggle [data-lang-en] { font-size: var(--text-xs); }   /* the CJK glyph reads larger than Latin capitals */
+
+/* 5. Main column, hero ------------------------------------------------------------------------ */
+.site-main {
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+  flex: 1;
+}
+
+.landing-hero { padding: 3rem 0 2.5rem; }
+
+.landing-hero__name {
+  font-size: var(--text-2xl);
+  font-weight: 500;
+  letter-spacing: var(--track-name);
+}
+
+.landing-hero__native {
+  margin: .3rem 0 .7rem;
+  font-family: var(--font-name);
+  font-size: var(--text-sm);
+  letter-spacing: .04em;
+  color: var(--fg-faint);
+}
+
+.landing-hero__subtitle {
+  max-width: 50ch;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--fg-muted);
+}
+
+/* Icon links -------------------------------------------------------------------------------- */
+.icon-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem;
+}
+
+.landing-hero__links {
+  margin-top: 1.25rem;
+  margin-left: -.55rem;          /* optical alignment: the first glyph sits on the text edge */
+}
+
+.icon-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 999px;
+  color: var(--fg-muted);
+  transition: color .15s, background-color .15s;
+}
+.icon-link:hover {
+  color: var(--fg);
+  background: color-mix(in srgb, var(--fg) 6%, transparent);
+}
+.icon-link svg { width: 1.1rem; height: 1.1rem; }
+
+.icon-text {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: .04em;
+  line-height: 1;
+}
+
+.icon-link--sm { width: 1.6rem; height: 1.6rem; }
+.icon-link--sm svg { width: .85rem; height: .85rem; }
+
+/* 6. Sections --------------------------------------------------------------------------------- */
+.landing-section { margin-top: 2.5rem; }
+.landing-section[id] { scroll-margin-top: calc(var(--nav-height) + 1.5rem); }
+
+.section-label {
+  margin-bottom: 1rem;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: var(--upper);
+  color: var(--fg-faint);
+}
+
+/* Running-text links: underlined at 40 % accent, full accent on hover. */
+.bio a,
+.news-item a,
+.notfound a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  text-underline-offset: 3px;
+}
+.bio a:hover,
+.news-item a:hover,
+.notfound a:hover { text-decoration-color: var(--accent); }
+
+/* About */
+.bio {
+  display: grid;
+  gap: .75rem;
+}
+
+/* News: date column + text (the epigraph grid) */
+.news-list {
+  display: grid;
+  gap: .5rem;
+}
+
+.news-item {
+  display: grid;
+  grid-template-columns: var(--gutter) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.news-item time {
+  font-size: var(--text-xs);
+  color: var(--fg-faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.news-item p {
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--fg-muted);
+}
+
+.news-item b {
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.js .news-list:not(.is-open) > .news-item--more { display: none; }
+
+.more-btn {
+  margin: .75rem 0 0 calc(var(--gutter) + 1rem);
+  padding: .1rem 0;
+  border: 0;
+  border-bottom: 1.5px solid transparent;
+  background: none;
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.more-btn:hover {
+  color: var(--fg);
+  border-bottom-color: var(--accent);
+}
+.more-btn[aria-expanded="true"] .more-btn__more,
+.more-btn[aria-expanded="false"] .more-btn__less { display: none; }
+
+/* 7. Publications ------------------------------------------------------------------------------ */
+.pub-list { display: grid; }
+
+.pub {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: 1.25rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.pub:first-child { padding-top: .25rem; }
+.pub:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.pub__thumb {
+  display: block;
+  align-self: start;
+  margin-top: .2rem;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  transition: border-color .15s;
+}
+.pub__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: var(--thumb-filter);
+  transition: filter .15s;
+}
+.pub__thumb:hover { border-color: var(--fg-muted); }
+.pub__thumb:hover img { filter: none; }
+
+.pub__body { min-width: 0; }
+
+.pub__title {
+  font-size: var(--text-base);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+.pub__title a {
+  color: var(--fg);
+  transition: color .15s;
+}
+.pub__title a:hover { color: var(--accent); }
+
+.pub__authors {
+  margin-top: .3rem;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--fg-muted);
+}
+.pub__authors .me {
+  font-weight: 600;
+  color: var(--fg);
+}
+.pub__authors sup,
+.pub-legend sup {
+  font-size: .75em;
+  line-height: 0;
+  color: var(--fg-faint);
+}
+.pub__authors sup { margin-left: .1em; }
+
+.pub__summary {
+  margin-top: .4rem;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--fg-faint);
+}
+
+.pub__meta {
+  display: flex;
+  align-items: baseline;
+  gap: .3rem 1rem;
+  margin-top: .55rem;
+}
+
+/* Desktop: wrapped links hang under the first link, not under the badge. */
+.pub__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem 1rem;
+  min-width: 0;
+}
+
+/* Venue badge: the reference's outlined badge box, without uppercase (NeurIPS, arXiv). */
+.venue {
+  flex: none;
+  padding: .05rem .4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  letter-spacing: .04em;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--fg-muted);
+}
+.venue--pub {
+  color: var(--venue-pub);
+  border-color: var(--venue-pub-line);
+}
+.venue--proj {
+  color: var(--venue-proj);
+  border-color: var(--venue-proj-line);
+}
+
+/* Links row: the nav-link vocabulary at 12px. */
+.pub__meta a,
+.bib-btn,
+.pub__bib > summary {
+  padding: .1rem 0;
+  border: 0;
+  border-bottom: 1.5px solid transparent;
+  background: none;
+  font-size: var(--text-xs);
+  letter-spacing: .06em;
+  text-transform: var(--upper);
+  line-height: 1.5;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.pub__meta a:hover,
+.bib-btn:hover,
+.bib-btn[aria-expanded="true"],
+.pub__bib > summary:hover,
+.pub__bib[open] > summary {
+  color: var(--fg);
+  border-bottom-color: var(--accent);
+}
+
+/* BibTeX: a native <details>; with JavaScript the BIBTEX button in the links row drives it. */
+.pub__bib { margin-top: .4rem; }
+.pub__bib > summary {
+  display: inline-block;
+  list-style: none;
+}
+.pub__bib > summary::-webkit-details-marker { display: none; }
+.js .pub__bib > summary { display: none; }
+.js .pub__bib { margin-top: .6rem; }
+.js .pub__bib:not([open]) { display: none; }
+:root:not(.js) .pub__bib[open] > summary + .pub__bib-body { margin-top: .5rem; }
+
+.pub__bib-body { display: flow-root; }
+
+.pub__bib pre {
+  padding: .85rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--code-bg);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  color: var(--fg-muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 2;
+}
+
+.copy-btn {
+  position: relative;
+  float: right;
+  margin: .55rem .55rem .2rem .75rem;
+  padding: .24rem .52rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  font-size: var(--text-xs);
+  letter-spacing: .08em;
+  text-transform: var(--upper);
+  line-height: 1.4;
+  color: var(--fg-faint);
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.copy-btn:hover {
+  color: var(--fg);
+  border-color: var(--accent);
+}
+/* Both labels share one grid cell, so the pill keeps the width of the longer one. */
+.copy-btn { display: inline-grid; }
+.copy-btn > span { grid-area: 1 / 1; text-align: center; }
+.copy-btn.is-copied .copy-btn__idle,
+.copy-btn:not(.is-copied) .copy-btn__done { visibility: hidden; }
+
+/* Everything that is not a selected work: compact rows grouped by year. */
+.pub-years {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.pub-year {
+  display: grid;
+  grid-template-columns: var(--gutter) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.pub-year__label {
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.7;
+  color: var(--fg-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.pub-year .pub-list { gap: 1.5rem; }
+.pub--compact {
+  display: block;
+  padding: 0;
+  border: 0;
+}
+
+.pub-legend {
+  margin-top: 1.5rem;
+  font-size: var(--text-xs);
+  color: var(--fg-faint);
+}
+.pub-legend span + span { margin-left: 1.25rem; }
+.pub-legend sup { margin-right: .3em; }
+
+/* 8. Education / experience / honors: the reference's article-card rows --------------------- */
+.cv-list { display: grid; }
+
+.cv-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: .6rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.cv-row:first-child { padding-top: 0; }
+.cv-row:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.cv-row__main { min-width: 0; }
+
+.cv-row__title {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--fg);
+}
+.cv-row__title a {
+  color: var(--fg);
+  transition: color .15s;
+}
+.cv-row__title a:hover { color: var(--accent); }
+
+.cv-row__sub {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--fg-muted);
+}
+
+.cv-row__meta {
+  flex-shrink: 0;
+  font-size: var(--text-xs);
+  color: var(--fg-faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* 9. Epigraphs (decorative; revealed once the reader starts to scroll) ----------------------- */
+.landing-epigraphs {
+  display: grid;
+  gap: 2rem;
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  transition: opacity .9s ease, transform .9s ease, visibility 0s;
+}
+.js .landing-epigraphs:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(.75rem);
+  visibility: hidden;
+  transition: opacity .5s ease, transform .5s ease, visibility 0s linear .5s;
+}
+
+.epigraph {
+  display: grid;
+  grid-template-columns: var(--gutter) minmax(0, 1fr);
+  gap: 0 1rem;
+}
+.epigraph blockquote,
+.epigraph figcaption { grid-column: 2; }
+
+.epigraph__year {
+  grid-row: 1 / span 2;
+  padding-top: .15rem;
+  font-size: var(--text-xs);
+  color: var(--fg-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.epigraph blockquote p {
+  margin-bottom: .5rem;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--fg-muted);
+}
+
+.epigraph figcaption {
+  font-size: var(--text-xs);
+  font-style: normal;
+  color: var(--fg-faint);
+}
+
+/* 10. Footer: aligned with the text column (the reference footer shrink-wrapped) ------------- */
+.site-footer {
+  width: calc(100% - 3rem);
+  max-width: calc(var(--content-width) - 3rem);
+  margin: 0 auto;
+  padding: 1.5rem 0 2rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: var(--text-xs);
+  color: var(--fg-faint);
+}
+.site-footer .icon-row { gap: .6rem; margin-right: -.375rem; }
+.site-footer .icon-link { color: var(--fg-faint); }
+.site-footer .icon-link:hover { color: var(--fg-muted); }
+
+/* 11. 404 ------------------------------------------------------------------------------------- */
+.notfound .landing-hero__subtitle { margin-top: .75rem; }
+.notfound__home {
+  margin-top: 1.25rem;
+  font-size: var(--text-sm);
+}
+
+/* 12. Phones ---------------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .site-nav {
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+  .site-nav__links { gap: .75rem; }
+  .site-nav__links a { font-size: var(--text-xs); }
+
+  .site-main { padding: 1.5rem 1rem 3rem; }
+  .landing-hero { padding: 2rem 0 1.5rem; }
+
+  .news-list { gap: .75rem; }
+  .news-item,
+  .epigraph,
+  .pub-year {
+    grid-template-columns: minmax(0, 1fr);
+    gap: .1rem;
+  }
+  .epigraph { row-gap: 0; }
+  .epigraph blockquote,
+  .epigraph figcaption { grid-column: 1; }
+  .epigraph__year {
+    grid-row: auto;
+    margin-bottom: .35rem;
+  }
+  .pub-year { gap: .5rem; }
+  .more-btn { margin-left: 0; }
+
+  .pub {
+    grid-template-columns: minmax(0, 1fr);   /* not 1fr: a long BibTeX line must not widen the track */
+    gap: .75rem;
+  }
+  .pub__thumb {
+    width: 11rem;
+    margin-top: 0;
+  }
+  .pub__meta { flex-wrap: wrap; }
+  .pub__links { display: contents; }   /* phones: links flow on after the badge */
+
+  .cv-row {
+    flex-direction: column;
+    gap: .2rem;
+  }
+
+  .site-footer {
+    width: calc(100% - 2rem);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5rem;
+    padding: 1rem 0 1.5rem;
+  }
+  .site-footer .icon-row { margin: 0 0 0 -.375rem; }
+}
+
+/* 13. Motion and print ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .landing-epigraphs,
+  .js .landing-epigraphs:not(.is-revealed) { transition: none; }
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
+
+@media print {
+  .site-header,
+  .skip-link,
+  .js-only,
+  .pub__bib { display: none !important; }
+  .js .news-list:not(.is-open) > .news-item--more { display: grid; }
+  .js .landing-epigraphs:not(.is-revealed) { opacity: 1; transform: none; visibility: visible; }
+  .pub__thumb img { filter: none; }
+  a { color: inherit; }
+}

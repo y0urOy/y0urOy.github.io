@@ -1,0 +1,8 @@
+_qa/
+_work/
+tools/cv/fonts/
+tools/cv/*.aux
+tools/cv/*.log
+tools/cv/*.out
+tools/cv/*.pdf
+.DS_Store
