@@ -38,7 +38,6 @@
   --venue-pub-line: #5b8def;
   --venue-proj: #4a7a40;       /* seedling badge tone: project release, paper forthcoming */
   --venue-proj-line: #88b67e;
-  --thumb-filter: none;
   --focus-ring: 2px solid var(--accent);
 }
 
@@ -57,7 +56,6 @@
   --venue-pub-line: #4070cc;
   --venue-proj: #88b67e;
   --venue-proj-line: #5a8a50;
-  --thumb-filter: brightness(.88);
 }
 
 /* Without JavaScript there is no data-theme: follow the system setting. */
@@ -77,8 +75,7 @@
     --venue-pub-line: #4070cc;
     --venue-proj: #88b67e;
     --venue-proj-line: #5a8a50;
-    --thumb-filter: brightness(.88);
-  }
+    }
 }
 
 :root[data-lang="zh"] {
@@ -202,12 +199,18 @@ summary:focus-visible {
   gap: 1.5rem;
 }
 
+/* Section links on the left (they scroll sideways on narrow screens), toggles on the right. */
 .site-nav__links {
-  margin-left: auto;
   display: flex;
   align-items: center;
   gap: 1.25rem;
+  min-width: 0;
+  margin-left: -.25rem;                 /* room for the focus ring inside the scroll box */
+  padding: .25rem .25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.site-nav__links::-webkit-scrollbar { display: none; }
 
 .site-nav__links a {
   padding: .2rem 0;
@@ -219,12 +222,15 @@ summary:focus-visible {
   white-space: nowrap;
   transition: color .15s, border-color .15s;
 }
-.site-nav__links a:hover {
+.site-nav__links a:hover,
+.site-nav__links a[aria-current] {
   color: var(--fg);
   border-bottom-color: var(--accent);
 }
 
 .site-nav__toggles {
+  flex: none;
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: .5rem;
@@ -417,9 +423,6 @@ summary:focus-visible {
 .pub-list { display: grid; }
 
 .pub {
-  display: grid;
-  grid-template-columns: 12.5rem minmax(0, 1fr);
-  gap: 1.25rem;
   padding: 1.25rem 0;
   border-bottom: 1px solid var(--border);
 }
@@ -428,29 +431,6 @@ summary:focus-visible {
   padding-bottom: 0;
   border-bottom: 0;
 }
-
-.pub__thumb {
-  display: block;
-  align-self: start;
-  margin-top: .2rem;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--bg-surface);
-  transition: border-color .15s;
-}
-.pub__thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: var(--thumb-filter);
-  transition: filter .15s;
-}
-.pub__thumb:hover { border-color: var(--fg-muted); }
-.pub__thumb:hover img { filter: none; }
-
-.pub__body { min-width: 0; }
 
 .pub__title {
   font-size: var(--text-base);
@@ -602,7 +582,17 @@ summary:focus-visible {
 .copy-btn.is-copied .copy-btn__idle,
 .copy-btn:not(.is-copied) .copy-btn__done { visibility: hidden; }
 
-/* Full list: compact rows (no thumbnails) on a year timeline, newest first. */
+/* Full list: every paper (selected works again) on a year timeline, newest first; collapsed by default. */
+.pub-all > summary {
+  display: inline-block;
+  margin: 0;
+  list-style: none;
+}
+.pub-all > summary::-webkit-details-marker { display: none; }
+.pub-all[open] > summary { margin-bottom: 1.25rem; }
+.pub-all:not([open]) .pub-all__open,
+.pub-all[open] .pub-all__closed { display: none; }
+
 .pub-years {
   display: grid;
   gap: 1.75rem;
@@ -626,7 +616,6 @@ summary:focus-visible {
 
 .pub-year .pub-list { gap: 1.5rem; }
 .pub--compact {
-  display: block;
   padding: 0;
   border: 0;
 }
@@ -683,7 +672,7 @@ summary:focus-visible {
   white-space: nowrap;
 }
 
-/* 10. Footer: aligned with the text column (the reference footer shrink-wrapped) ------------- */
+/* 9. Footer: aligned with the text column (the reference footer shrink-wrapped) ------------- */
 .site-footer {
   width: calc(100% - 3rem);
   max-width: calc(var(--content-width) - 3rem);
@@ -701,20 +690,24 @@ summary:focus-visible {
 .site-footer .icon-link { color: var(--fg-faint); }
 .site-footer .icon-link:hover { color: var(--fg-muted); }
 
-/* 11. 404 ------------------------------------------------------------------------------------- */
+/* 10. 404 ------------------------------------------------------------------------------------- */
 .notfound .landing-hero__subtitle { margin-top: .75rem; }
 .notfound__home {
   margin-top: 1.25rem;
   font-size: var(--text-sm);
 }
 
-/* 12. Phones ---------------------------------------------------------------------------------- */
+/* 11. Phones ---------------------------------------------------------------------------------- */
 @media (max-width: 640px) {
   .site-nav {
     padding: 0 1rem;
     gap: 1rem;
   }
-  .site-nav__links { gap: .75rem; }
+  .site-nav__links {
+    gap: .75rem;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 1.25rem), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 1.25rem), transparent);   /* hints that the row scrolls */
+  }
   .site-nav__links a { font-size: var(--text-xs); }
 
   .site-main { padding: 1.5rem 1rem 3rem; }
@@ -729,14 +722,6 @@ summary:focus-visible {
   .pub-year { gap: .5rem; }
   .more-btn { margin-left: 0; }
 
-  .pub {
-    grid-template-columns: minmax(0, 1fr);   /* not 1fr: a long BibTeX line must not widen the track */
-    gap: .75rem;
-  }
-  .pub__thumb {
-    width: 11rem;
-    margin-top: 0;
-  }
   .pub__meta { flex-wrap: wrap; }
   .pub__links { display: contents; }   /* phones: links flow on after the badge */
 
@@ -755,7 +740,7 @@ summary:focus-visible {
   .site-footer .icon-row { margin: 0 0 0 -.375rem; }
 }
 
-/* 13. Motion and print ------------------------------------------------------------------------- */
+/* 12. Motion and print ------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; }
@@ -767,6 +752,5 @@ summary:focus-visible {
   .js-only,
   .pub__bib { display: none !important; }
   .js .news-list:not(.is-open) > .news-item--more { display: grid; }
-  .pub__thumb img { filter: none; }
   a { color: inherit; }
 }

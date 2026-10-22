@@ -8,7 +8,7 @@ index.html            the whole site (one page)
 cv.pdf                CV linked from the header, hero and footer
 assets/css/site.css   all styles (tokens at the top)
 assets/js/site.js     theme and language toggles, news "More", BibTeX panels and copy buttons
-assets/img/           publication thumbnails (400x250 WebP, 16:10) and og.png (social card)
+assets/img/           og.png (social card) and apple-touch-icon.png
 favicon.svg  robots.txt  sitemap.xml  .nojekyll
 ```
 
@@ -25,7 +25,7 @@ Every translatable text appears twice, side by side, as siblings marked `data-la
 ```
 
 - **News.** Newest first. The first six items are visible; give older items the class `news-item news-item--more` so they sit behind the "More" button.
-- **Publications.** "Selected Publications" (`#publications`) lists the four selected works newest first, each with a 400x250 WebP thumbnail in `assets/img/`. "Publications" (`#more-publications`) is the full list, including the selected works again, as compact rows (`<li class="pub pub--compact">`, no thumbnail) under year labels, newest first. A repeated entry needs its own BibTeX id (the timeline copies use `bib-SLUG-all`). Paper titles, author names, venue badges and BibTeX stay in English and carry `lang="en"` and `translate="no"` (so browser machine translation leaves them alone). The owner's name is `<span class="me">`; author marks are `<sup>*</sup>` (equal contribution) and `<sup>†</sup>` (corresponding author). Each BibTeX entry is a `<details class="pub__bib" id="bib-SLUG">` plus a `<button class="bib-btn" aria-controls="bib-SLUG">` in the links row.
+- **Publications.** Text only, no thumbnails. "Selected Publications" (`#publications`) lists the four selected works newest first, followed by the `*` / `†` legend. "Publications" (`#more-publications`) is the full list, including the selected works again, under year labels, newest first, inside `<details class="pub-all">` so it is collapsed by default ("Show all (10)"; update the count when you add a paper). A repeated entry needs its own BibTeX id (the timeline copies use `bib-SLUG-all`). Paper titles, author names, venue badges and BibTeX stay in English and carry `lang="en"` and `translate="no"` (so browser machine translation leaves them alone). The owner's name is `<span class="me">`; author marks are `<sup>*</sup>` (equal contribution) and `<sup>†</sup>` (corresponding author). Each BibTeX entry is a `<details class="pub__bib" id="bib-SLUG">` plus a `<button class="bib-btn" aria-controls="bib-SLUG">` in the links row.
 - **Venue badge tones.** `venue venue--pub` for accepted or published papers, plain `venue` for preprints, `venue venue--proj` for project releases.
 - **Labels that live in attributes** (button names, tooltips, page title, meta description) keep both languages in `data-*` attributes next to the element (`data-label-en` / `data-label-zh`, `data-title-en` / `data-title-zh`, `<title data-zh>`).
 - Avoid em dashes; use an en dash only in date ranges (`2024.10 – present`).
@@ -33,6 +33,7 @@ Every translatable text appears twice, side by side, as siblings marked `data-la
 ## Behaviour
 
 - **Language.** English by default for every visitor (no browser detection). The 中 / EN button switches the whole page; the choice is stored in `localStorage` (`lang`). `?lang=zh` or `?lang=en` overrides it. An inline script in `<head>` applies the language before the first paint and sets `<html lang>` to `en` or `zh-Hans`. Noto Sans SC is requested only when Chinese is shown. Without JavaScript the page is English only.
+- **Header.** Section links (News, Publications, Education, Experience, CV) on the left, scrolling sideways on phones; the link of the section being read is underlined (`aria-current="location"`, set by `assets/js/site.js`).
 - **Theme.** Follows `prefers-color-scheme` until the visitor uses the toggle (stored as `theme`). Without JavaScript the system setting still applies.
 
 ## CV

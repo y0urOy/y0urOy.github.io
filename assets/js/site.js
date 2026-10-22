@@ -1,5 +1,5 @@
 /* Yonghao Yu, personal homepage: theme and language toggles, news disclosure, BibTeX panels,
-   and copy buttons. No dependencies. The pre-paint script in <head> has
+   and copy buttons, header section highlight. No dependencies. The pre-paint script in <head> has
    already set <html class="js" data-theme data-lang lang> and exposes window.__site. */
 (function () {
   'use strict';
@@ -180,4 +180,41 @@
     }
   });
 
+  /* Header links: underline the section being read. */
+  var spyLinks = {};
+  [].forEach.call(doc.querySelectorAll('.site-nav__links a[href^="#"]'), function (a) {
+    spyLinks[a.getAttribute('href').slice(1)] = a;
+  });
+  var spyOwner = { 'more-publications': 'publications', honors: 'experience' };
+  var spySections = [].slice.call(doc.querySelectorAll('main section[id]'));
+  var spyQueued = false;
+  var spyLock = null;   /* after a header click, keep that link marked until the reader scrolls by hand */
+  Object.keys(spyLinks).forEach(function (id) {
+    spyLinks[id].addEventListener('click', function () { spyLock = id; spy(); });
+  });
+  ['wheel', 'touchstart', 'keydown'].forEach(function (type) {
+    window.addEventListener(type, function () { spyLock = null; }, { passive: true });
+  });
+  var spy = function () {
+    spyQueued = false;
+    var line = window.scrollY + 120, cur = null, de = doc.documentElement;
+    spySections.forEach(function (s) {
+      if (s.getBoundingClientRect().top + window.scrollY <= line) cur = s.id;
+    });
+    if (window.innerHeight + window.scrollY >= de.scrollHeight - 2 && spySections.length) {
+      cur = spySections[spySections.length - 1].id;
+    }
+    cur = spyLock || spyOwner[cur] || cur;
+    Object.keys(spyLinks).forEach(function (id) {
+      if (id === cur) spyLinks[id].setAttribute('aria-current', 'location');
+      else spyLinks[id].removeAttribute('aria-current');
+    });
+  };
+  if (spySections.length && Object.keys(spyLinks).length) {
+    window.addEventListener('scroll', function () {
+      if (!spyQueued) { spyQueued = true; window.requestAnimationFrame(spy); }
+    }, { passive: true });
+    window.addEventListener('resize', spy);
+    spy();
+  }
 })();
