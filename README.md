@@ -7,7 +7,7 @@ index.html            the whole site (one page)
 404.html              not-found page (root-absolute paths, follows the stored language)
 cv.pdf                CV linked from the header, hero and footer
 assets/css/site.css   all styles (tokens at the top)
-assets/js/site.js     theme and language toggles, news "More", BibTeX panels, epigraph reveal
+assets/js/site.js     theme and language toggles, news "More", BibTeX panels and copy buttons
 assets/img/           publication thumbnails (400x250 WebP, 16:10) and og.png (social card)
 favicon.svg  robots.txt  sitemap.xml  .nojekyll
 ```
@@ -25,7 +25,7 @@ Every translatable text appears twice, side by side, as siblings marked `data-la
 ```
 
 - **News.** Newest first. The first six items are visible; give older items the class `news-item news-item--more` so they sit behind the "More" button.
-- **Publications.** Selected works (with a thumbnail) are in the first list; the others are grouped by year below it. Paper titles, author names, venue badges and BibTeX stay in English and carry `lang="en"`. The owner's name is `<span class="me">`; author marks are `<sup>*</sup>` (equal contribution) and `<sup>†</sup>` (corresponding author). Each BibTeX entry is a `<details class="pub__bib" id="bib-SLUG">` plus a `<button class="bib-btn" aria-controls="bib-SLUG">` in the links row.
+- **Publications.** Two lists, each newest first: "Selected Publications" (`#publications`, the four selected works) and "Publications" (`#more-publications`, everything else). Every entry has a 400x250 WebP thumbnail in `assets/img/` (`<span class="pub__thumb pub__thumb--empty">` is the placeholder for a paper without a figure). Paper titles, author names, venue badges and BibTeX stay in English and carry `lang="en"` and `translate="no"` (so browser machine translation leaves them alone). The owner's name is `<span class="me">`; author marks are `<sup>*</sup>` (equal contribution) and `<sup>†</sup>` (corresponding author). Each BibTeX entry is a `<details class="pub__bib" id="bib-SLUG">` plus a `<button class="bib-btn" aria-controls="bib-SLUG">` in the links row.
 - **Venue badge tones.** `venue venue--pub` for accepted or published papers, plain `venue` for preprints, `venue venue--proj` for project releases.
 - **Labels that live in attributes** (button names, tooltips, page title, meta description) keep both languages in `data-*` attributes next to the element (`data-label-en` / `data-label-zh`, `data-title-en` / `data-title-zh`, `<title data-zh>`).
 - Avoid em dashes; use an en dash only in date ranges (`2024.10 – present`).

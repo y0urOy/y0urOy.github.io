@@ -1,5 +1,5 @@
 /* Yonghao Yu, personal homepage: theme and language toggles, news disclosure, BibTeX panels,
-   copy buttons and the epigraph reveal. No dependencies. The pre-paint script in <head> has
+   and copy buttons. No dependencies. The pre-paint script in <head> has
    already set <html class="js" data-theme data-lang lang> and exposes window.__site. */
 (function () {
   'use strict';
@@ -180,27 +180,4 @@
     }
   });
 
-  /* Epigraphs: hidden at the very top of the page, revealed as soon as the reader scrolls
-     (wheel, touch and keys cover pages too short to scroll). */
-  var epi = doc.querySelector('[data-reveal-on-scroll]');
-  if (epi) {
-    var show = function (on) { epi.classList.toggle('is-revealed', on); };
-    show(window.scrollY > 0);
-    window.addEventListener('scroll', function () { show(window.scrollY > 0); }, { passive: true });
-    window.addEventListener('wheel', function (e) {
-      if (e.deltaY > 0) show(true);
-      else if (e.deltaY < 0 && window.scrollY <= 0) show(false);
-    }, { passive: true });
-    var touchY = 0;
-    window.addEventListener('touchstart', function (e) { touchY = e.touches[0].clientY; }, { passive: true });
-    window.addEventListener('touchmove', function (e) {
-      var dy = touchY - e.touches[0].clientY;
-      if (dy > 0) show(true);
-      else if (dy < 0 && window.scrollY <= 0) show(false);
-    }, { passive: true });
-    window.addEventListener('keydown', function (e) {
-      if (/^(ArrowDown|PageDown|End| )$/.test(e.key)) show(true);
-      else if (/^(ArrowUp|PageUp|Home)$/.test(e.key) && window.scrollY <= 0) show(false);
-    });
-  }
 })();
