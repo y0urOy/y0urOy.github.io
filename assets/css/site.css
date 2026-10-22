@@ -14,9 +14,9 @@
   --text-base: .875rem;   /* 14px: body, titles, subtitles */
   --text-2xl: 1.75rem;    /* 28px: the name */
 
-  --content-width: 760px;
+  --content-width: 960px;
   --nav-height: 3.5rem;
-  --gutter: 3.5rem;       /* date column of the news list */
+  --gutter: 3.5rem;       /* date / year column of the news list and the publication timeline */
   --radius-sm: 4px;
   --radius-md: 8px;
 
@@ -418,7 +418,7 @@ summary:focus-visible {
 
 .pub {
   display: grid;
-  grid-template-columns: 10.5rem minmax(0, 1fr);
+  grid-template-columns: 12.5rem minmax(0, 1fr);
   gap: 1.25rem;
   padding: 1.25rem 0;
   border-bottom: 1px solid var(--border);
@@ -602,13 +602,33 @@ summary:focus-visible {
 .copy-btn.is-copied .copy-btn__idle,
 .copy-btn:not(.is-copied) .copy-btn__done { visibility: hidden; }
 
-/* A paper without a figure keeps the thumbnail column with a quiet placeholder (hidden on phones). */
-.pub__thumb--empty {
+/* Full list: compact rows (no thumbnails) on a year timeline, newest first. */
+.pub-years {
   display: grid;
-  place-items: center;
+  gap: 1.75rem;
+}
+
+.pub-year {
+  display: grid;
+  grid-template-columns: var(--gutter) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.pub-year__label {
   font-size: var(--text-xs);
-  letter-spacing: .04em;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.7;
   color: var(--fg-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.pub-year .pub-list { gap: 1.5rem; }
+.pub--compact {
+  display: block;
+  padding: 0;
+  border: 0;
 }
 
 .pub-legend {
@@ -701,10 +721,12 @@ summary:focus-visible {
   .landing-hero { padding: 2rem 0 1.5rem; }
 
   .news-list { gap: .75rem; }
-  .news-item {
+  .news-item,
+  .pub-year {
     grid-template-columns: minmax(0, 1fr);
     gap: .1rem;
   }
+  .pub-year { gap: .5rem; }
   .more-btn { margin-left: 0; }
 
   .pub {
@@ -715,7 +737,6 @@ summary:focus-visible {
     width: 11rem;
     margin-top: 0;
   }
-  .pub__thumb--empty { display: none; }
   .pub__meta { flex-wrap: wrap; }
   .pub__links { display: contents; }   /* phones: links flow on after the badge */
 

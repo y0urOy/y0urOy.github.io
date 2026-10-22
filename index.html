@@ -368,11 +368,25 @@
 
     <section class="landing-section" id="more-publications" aria-labelledby="more-publications-h">
       <h2 class="section-label" id="more-publications-h"><span data-lang-en>Publications</span><span data-lang-zh>论文</span></h2>
-      <div class="pub-group">
-        <ol class="pub-list">
-          <li class="pub">
-            <a class="pub__thumb" href="https://alaya-lab.github.io/EditHero/" tabindex="-1"><img src="assets/img/edithero.webp" alt="EditHero teaser: multi-turn edits of a 3D character" lang="en" width="400" height="250" loading="lazy" decoding="async"></a>
-            <div class="pub__body">
+      <div class="pub-years">
+        <div class="pub-year">
+          <h3 class="pub-year__label">2026</h3>
+          <ol class="pub-list">
+            <li class="pub pub--compact">
+              <h4 class="pub__title" lang="en" translate="no"><a href="https://alaya-lab.github.io/MeshAxiom/">MeshAxiom: An Agent-Native 3D Foundation Stack for Programmable Worlds</a></h4>
+              <p class="pub__authors" lang="en" translate="no"><span class="me">Yonghao Yu</span>, Ruihan Yu, Sho Kuno, Muyao Niu, Yu-Ju Tsai, Zheng-Hui Huang, Fengbo Lan, Guixu Lin, Runyi Li, Chuanhao Li, Ming-Hsuan Yang, Kaipeng Zhang, Zhixiang Wang</p>
+              <p class="pub__summary" data-lang-en>MeshAxiom-Base generates compact explicit meshes from one image and a requested face budget; file-based tools let agents inspect and edit them, and reuse them as modules in scene programs.</p>
+              <p class="pub__summary" data-lang-zh>MeshAxiom-Base 根据一张图像和指定的面数预算生成紧凑的显式网格；基于文件的工具让智能体能够检查、编辑这些网格，并在场景程序中把它们作为模块复用。</p>
+              <div class="pub__meta">
+                <span class="venue venue--proj"><span data-lang-en>Project 2026</span><span data-lang-zh>项目 2026</span></span>
+                <div class="pub__links">
+                  <a href="https://alaya-lab.github.io/MeshAxiom/"><span data-lang-en>Project</span><span data-lang-zh>项目主页</span></a>
+                  <a href="https://github.com/AlayaLab/MeshAxiom"><span data-lang-en>Code</span><span data-lang-zh>代码</span></a>
+                  <a href="https://huggingface.co/AlayaLab/MeshAxiom-Base"><span data-lang-en>Model</span><span data-lang-zh>模型</span></a>
+                </div>
+              </div>
+            </li>
+            <li class="pub pub--compact">
               <h4 class="pub__title" lang="en" translate="no"><a href="https://alaya-lab.github.io/EditHero/">EditHero: A Benchmark for Long-Horizon Part-Level 3D Editing and Vibe Modeling</a></h4>
               <p class="pub__authors" lang="en" translate="no">Ruihan Yu<sup>*</sup>, Yu-Ju Tsai<sup>*</sup>, Muyao Niu, Runyi Li, Lian Fu, Hanqing Liu, Zheng-Hui Huang, <span class="me">Yonghao Yu</span>, Sho Kuno, Ming-Hsuan Yang<sup>†</sup>, Kaipeng Zhang<sup>†</sup>, Zhixiang Wang<sup>†</sup></p>
               <p class="pub__summary" data-lang-en>A benchmark for long-horizon, part-level 3D editing with an exact target after every edit, comparing 3D editors with LLM and VLM agents that edit meshes through code.</p>
@@ -399,11 +413,8 @@
       url={https://arxiv.org/abs/2610.02298},
 }</code></pre></div>
               </details>
-            </div>
-          </li>
-          <li class="pub">
-            <a class="pub__thumb" href="https://alaya-lab.github.io/KaiNinja/" tabindex="-1"><img src="assets/img/kaininja.webp" alt="KaiNinja teaser: a furnished room generated part by part" lang="en" width="400" height="250" loading="lazy" decoding="async"></a>
-            <div class="pub__body">
+            </li>
+            <li class="pub pub--compact">
               <h4 class="pub__title" lang="en" translate="no"><a href="https://alaya-lab.github.io/KaiNinja/">KaiNinja: Extending Native 3D Generators to the Part Level</a></h4>
               <p class="pub__authors" lang="en" translate="no">Ruihan Yu, Lian Fu, Muyao Niu, Zheng-hui Huang, Yu-Ju Tsai, Sho Kuno, Fengbo Lan, <span class="me">Yonghao Yu</span>, Erwin Wu, Ming-Hsuan Yang, Kaipeng Zhang<sup>†</sup>, Zhixiang Wang<sup>†</sup></p>
               <p class="pub__summary" data-lang-en>Extends a native image-to-3D generator (TRELLIS.2) to the part level, generating separate part meshes from one image without masks or a segmenter.</p>
@@ -428,11 +439,8 @@
       url={https://arxiv.org/abs/2609.15659},
 }</code></pre></div>
               </details>
-            </div>
-          </li>
-          <li class="pub">
-            <a class="pub__thumb" href="https://alaya-lab.github.io/WorldSculpt/" tabindex="-1"><img src="assets/img/worldsculpt.webp" alt="WorldSculpt teaser: a compositional scene of many generated objects" lang="en" width="400" height="250" loading="lazy" decoding="async"></a>
-            <div class="pub__body">
+            </li>
+            <li class="pub pub--compact">
               <h4 class="pub__title" lang="en" translate="no"><a href="https://alaya-lab.github.io/WorldSculpt/">WorldSculpt: Generating Compositional Worlds from Grounded Videos</a></h4>
               <p class="pub__authors" lang="en" translate="no">Muyao Niu, Jixuan He, Ruihan Yu, Lian Fu, <span class="me">Yonghao Yu</span>, Zheng-Hui Huang, Yifan Zhan, Fengbo Lan, Yongtao Ge, Yinqiang Zheng, Kaipeng Zhang<sup>†</sup>, Zhixiang Wang<sup>†</sup></p>
               <p class="pub__summary" data-lang-en>Generates cluttered scenes with hundreds of objects as individual meshes in a shared world frame by adapting a single-object 3D prior to multi-view observations.</p>
@@ -460,11 +468,34 @@
       url={https://arxiv.org/abs/2609.05416},
 }</code></pre></div>
               </details>
-            </div>
-          </li>
-          <li class="pub">
-            <a class="pub__thumb" href="https://doi.org/10.1109/IJCNN69854.2026.11729361" tabindex="-1"><img src="assets/img/feddetox.webp" alt="FedDetox pipeline: distilling a safety classifier from a teacher model" lang="en" width="400" height="250" loading="lazy" decoding="async"></a>
-            <div class="pub__body">
+            </li>
+            <li class="pub pub--compact">
+              <h4 class="pub__title" lang="en" translate="no"><a href="https://y0uroy.github.io/Video-Mirai/">Video-Mirai: Autoregressive Video Diffusion Models Need Foresight</a></h4>
+              <p class="pub__authors" lang="en" translate="no"><span class="me">Yonghao Yu</span>, Lang Huang<sup>†</sup>, Runyi Li, Zerun Wang, Toshihiko Yamasaki</p>
+              <p class="pub__summary" data-lang-en>A training-only foresight objective for autoregressive video diffusion: future segments supervise the current causal state during training, and inference cost stays the same.</p>
+              <p class="pub__summary" data-lang-zh>面向自回归视频扩散模型的纯训练期 foresight 目标：训练时用未来片段监督当前的因果状态，推理开销保持不变。</p>
+              <div class="pub__meta">
+                <span class="venue venue--pub" lang="en" translate="no">NeurIPS 2026</span>
+                <div class="pub__links">
+                  <a href="https://arxiv.org/abs/2606.03971">arXiv</a>
+                  <a href="https://openreview.net/forum?id=0Oqbkn7POo">OpenReview</a>
+                  <a href="https://y0uroy.github.io/Video-Mirai/"><span data-lang-en>Project</span><span data-lang-zh>项目主页</span></a>
+                  <a href="https://github.com/y0urOy/Video-Mirai"><span data-lang-en>Code</span><span data-lang-zh>代码</span></a>
+                  <a href="https://huggingface.co/y0urOy/Video-Mirai"><span data-lang-en>Model</span><span data-lang-zh>模型</span></a>
+                  <button class="bib-btn js-only" type="button" aria-expanded="false" aria-controls="bib-video-mirai-all">BibTeX</button>
+                </div>
+              </div>
+              <details translate="no" class="pub__bib" id="bib-video-mirai-all">
+                <summary>BibTeX</summary>
+                <div class="pub__bib-body"><pre lang="en"><code>@inproceedings{yu2026videomirai,
+  title     = {Video-Mirai: Autoregressive Video Diffusion Models Need Foresight},
+  author    = {Yu, Yonghao and Huang, Lang and Li, Runyi and Wang, Zerun and Yamasaki, Toshihiko},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2026}
+}</code></pre></div>
+              </details>
+            </li>
+            <li class="pub pub--compact">
               <h4 class="pub__title" lang="en" translate="no"><a href="https://doi.org/10.1109/IJCNN69854.2026.11729361">FedDetox: Robust Federated SLM Alignment via On-Device Data Sanitization</a></h4>
               <p class="pub__authors" lang="en" translate="no">Shunan Zhu, Jiawei Chen, <span class="me">Yonghao Yu</span>, Hideya Ochiai</p>
               <p class="pub__summary" data-lang-en>Federated alignment for small language models: on-device classifiers distilled from safety-aligned teachers replace unsafe client samples, keeping safety close to centralized training.</p>
@@ -489,11 +520,40 @@
   doi       = {10.1109/IJCNN69854.2026.11729361}
 }</code></pre></div>
               </details>
-            </div>
-          </li>
-          <li class="pub">
-            <a class="pub__thumb" href="https://arxiv.org/abs/2401.17746" tabindex="-1"><img src="assets/img/logit-poisoning.webp" alt="Overview of the logit poisoning attack in federated distillation" lang="en" width="400" height="250" loading="lazy" decoding="async"></a>
-            <div class="pub__body">
+            </li>
+            <li class="pub pub--compact">
+              <h4 class="pub__title" lang="en" translate="no"><a href="https://y0uroy.github.io/Mirai/">Mirai: Autoregressive Visual Generation Needs Foresight</a></h4>
+              <p class="pub__authors" lang="en" translate="no"><span class="me">Yonghao Yu</span>, Lang Huang<sup>†</sup>, Zerun Wang, Runyi Li, Toshihiko Yamasaki</p>
+              <p class="pub__summary" data-lang-en>Foresight for autoregressive image generation: aligning internal states with signals from future tokens on the 2D grid speeds up LlamaGen convergence by up to 10x, with no architecture change or inference overhead. (Mirai means future in Japanese.)</p>
+              <p class="pub__summary" data-lang-zh>为自回归图像生成引入 foresight：在二维网格上把内部状态与来自未来 token 的信号对齐，使 LlamaGen 的收敛最多加快 10 倍，且无需改动架构、不增加推理开销。（Mirai 在日语中意为“未来”。）</p>
+              <div class="pub__meta">
+                <span class="venue venue--pub" lang="en" translate="no">CVPR 2026</span>
+                <div class="pub__links">
+                  <a href="https://openaccess.thecvf.com/content/CVPR2026/html/Yu_Mirai_Autoregressive_Visual_Generation_Needs_Foresight_CVPR_2026_paper.html"><span data-lang-en>Paper</span><span data-lang-zh>论文</span></a>
+                  <a href="https://arxiv.org/abs/2601.14671">arXiv</a>
+                  <a href="https://y0uroy.github.io/Mirai/"><span data-lang-en>Project</span><span data-lang-zh>项目主页</span></a>
+                  <a href="https://github.com/y0urOy/Mirai-Code"><span data-lang-en>Code</span><span data-lang-zh>代码</span></a>
+                  <button class="bib-btn js-only" type="button" aria-expanded="false" aria-controls="bib-mirai-all">BibTeX</button>
+                </div>
+              </div>
+              <details translate="no" class="pub__bib" id="bib-mirai-all">
+                <summary>BibTeX</summary>
+                <div class="pub__bib-body"><pre lang="en"><code>@InProceedings{Yu_2026_CVPR,
+    author    = {Yu, Yonghao and Huang, Lang and Wang, Zerun and Li, Runyi and Yamasaki, Toshihiko},
+    title     = {Mirai: Autoregressive Visual Generation Needs Foresight},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2026},
+    pages     = {30511-30520}
+}</code></pre></div>
+              </details>
+            </li>
+          </ol>
+        </div>
+        <div class="pub-year">
+          <h3 class="pub-year__label">2024</h3>
+          <ol class="pub-list">
+            <li class="pub pub--compact">
               <h4 class="pub__title" lang="en" translate="no"><a href="https://arxiv.org/abs/2401.17746">Logit Poisoning Attack in Distillation-based Federated Learning and its Countermeasures</a></h4>
               <p class="pub__authors" lang="en" translate="no"><span class="me">Yonghao Yu</span><sup>†</sup>, Shunan Zhu, Jinglu Hu</p>
               <p class="pub__summary" data-lang-en>A two-stage logit poisoning attack on distillation-based federated learning, and a defense that compares uploaded logits with estimated benign ones.</p>
@@ -525,11 +585,44 @@
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }</code></pre></div>
               </details>
-            </div>
-          </li>
-          <li class="pub">
-            <span class="pub__thumb pub__thumb--empty" aria-hidden="true" translate="no">KSEM 2022</span>
-            <div class="pub__body">
+            </li>
+            <li class="pub pub--compact">
+              <h4 class="pub__title" lang="en" translate="no"><a href="https://www.ijcai.org/proceedings/2024/598">BoostDream: Efficient Refining for High-Quality Text-to-3D Generation from Multi-View Diffusion</a></h4>
+              <p class="pub__authors" lang="en" translate="no"><span class="me">Yonghao Yu</span><sup>†</sup>, Shunan Zhu, Huai Qin, Haorui Li</p>
+              <p class="pub__summary" data-lang-en>A plug-and-play refiner that turns coarse feed-forward 3D assets into high-quality ones with multi-view SDS guided by normal maps, avoiding the Janus problem.</p>
+              <p class="pub__summary" data-lang-zh>一个即插即用的精炼方法，借助法线图引导的多视角 SDS，把前馈生成的粗糙 3D 资产提升为高质量资产，并避免 Janus 问题。</p>
+              <div class="pub__meta">
+                <span class="venue venue--pub" lang="en" translate="no">IJCAI 2024</span>
+                <div class="pub__links">
+                  <a href="https://www.ijcai.org/proceedings/2024/598"><span data-lang-en>Paper</span><span data-lang-zh>论文</span></a>
+                  <a href="https://arxiv.org/abs/2401.16764">arXiv</a>
+                  <button class="bib-btn js-only" type="button" aria-expanded="false" aria-controls="bib-boostdream-all">BibTeX</button>
+                </div>
+              </div>
+              <details translate="no" class="pub__bib" id="bib-boostdream-all">
+                <summary>BibTeX</summary>
+                <div class="pub__bib-body"><pre lang="en"><code>@inproceedings{ijcai2024p598,
+  title     = {BoostDream: Efficient Refining for High-Quality Text-to-3D Generation from Multi-View Diffusion},
+  author    = {Yu, Yonghao and Zhu, Shunan and Qin, Huai and Li, Haorui},
+  booktitle = {Proceedings of the Thirty-Third International Joint Conference on
+               Artificial Intelligence, {IJCAI-24}},
+  publisher = {International Joint Conferences on Artificial Intelligence Organization},
+  editor    = {Kate Larson},
+  pages     = {5407--5415},
+  year      = {2024},
+  month     = {8},
+  note      = {Main Track},
+  doi       = {10.24963/ijcai.2024/598},
+  url       = {https://doi.org/10.24963/ijcai.2024/598},
+}</code></pre></div>
+              </details>
+            </li>
+          </ol>
+        </div>
+        <div class="pub-year">
+          <h3 class="pub-year__label">2022</h3>
+          <ol class="pub-list">
+            <li class="pub pub--compact">
               <h4 class="pub__title" lang="en" translate="no"><a href="https://doi.org/10.1007/978-3-031-10989-8_22">Spotlight on Video Piracy Websites: Familial Analysis Based on Multidimensional Features</a></h4>
               <p class="pub__authors" lang="en" translate="no">Chenlin Wang, <span class="me">Yonghao Yu</span>, Ao Pu, Fan Shi<sup>†</sup>, Cheng Huang</p>
               <p class="pub__summary" data-lang-en>Proactively discovers video piracy websites with 96.2% detection accuracy and groups them into families from layout, content and infrastructure features.</p>
@@ -571,9 +664,9 @@
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }</code></pre></div>
               </details>
-            </div>
-          </li>
-        </ol>
+            </li>
+          </ol>
+        </div>
       </div>
       <p class="pub-legend" data-lang-en><span><sup>*</sup>equal contribution</span><span><sup>†</sup>corresponding author</span></p>
       <p class="pub-legend" data-lang-zh><span><sup>*</sup>同等贡献</span><span><sup>†</sup>通讯作者</span></p>
