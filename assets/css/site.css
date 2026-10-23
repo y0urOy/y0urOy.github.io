@@ -302,8 +302,8 @@ summary:focus-visible {
 }
 .landing-hero__text { flex: 1 1 auto; min-width: 0; }
 
-/* Portrait: a quiet circle on the right edge of the column. Its top meets the cap height of the
-   name and its bottom the icon glyphs, so it spans exactly the visible hero text (about 158px). */
+/* Portrait: a square with the site's card radius on the right edge of the column. Its top meets the
+   cap height of the name and its bottom the icon glyphs, so it spans exactly the visible hero text. */
 .landing-hero__photo {
   flex: none;
   align-self: flex-start;
@@ -311,7 +311,7 @@ summary:focus-visible {
   height: 9.875rem;
   margin-top: .35rem;
   border: 1px solid var(--border);
-  border-radius: 50%;
+  border-radius: var(--radius-md);
   object-fit: cover;
   background: var(--bg-surface);
   filter: var(--photo-filter);
