@@ -296,21 +296,23 @@ summary:focus-visible {
 .landing-hero {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 2.5rem;
+  justify-content: flex-start;          /* the portrait sits right beside the text, one group */
+  gap: 3rem;
   padding: 3rem 0 2.5rem;
 }
-.landing-hero__text { flex: 1 1 auto; min-width: 0; }
+.landing-hero__text {
+  flex: 0 1 auto;
+  min-width: 25rem;                     /* same portrait position in English and Chinese */
+}
 
-/* Portrait: a 4:5 card (the site's card radius) near the right edge of the column. Its top meets the
-   cap height of the name and its bottom the icon glyphs, so it spans exactly the visible hero text. */
+/* Portrait: a 4:5 card (the site's card radius) next to the hero text. Its top meets the cap height
+   of the name and its bottom the icon glyphs, so it spans exactly the visible hero text. */
 .landing-hero__photo {
   flex: none;
   align-self: flex-start;
   width: 7.9rem;
   height: 9.875rem;
   margin-top: .35rem;
-  margin-right: 1.25rem;                /* a little in from the right edge of the column */
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   object-fit: cover;
@@ -774,11 +776,14 @@ summary:focus-visible {
     gap: 1.25rem;
     padding: 2rem 0 1.5rem;
   }
+  .landing-hero__text {
+    width: 100%;
+    min-width: 0;
+  }
   .landing-hero__photo {
     width: 6rem;
     height: 7.5rem;
     margin-top: 0;
-    margin-right: 0;
   }
 
   .news-list { gap: .75rem; }
