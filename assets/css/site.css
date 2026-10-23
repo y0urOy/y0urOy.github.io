@@ -38,6 +38,7 @@
   --venue-pub-line: #5b8def;
   --venue-proj: #4a7a40;       /* seedling badge tone: project release, paper forthcoming */
   --venue-proj-line: #88b67e;
+  --photo-filter: none;
   --focus-ring: 2px solid var(--accent);
 }
 
@@ -56,6 +57,7 @@
   --venue-pub-line: #4070cc;
   --venue-proj: #88b67e;
   --venue-proj-line: #5a8a50;
+  --photo-filter: brightness(.92);
 }
 
 /* Without JavaScript there is no data-theme: follow the system setting. */
@@ -75,6 +77,7 @@
     --venue-pub-line: #4070cc;
     --venue-proj: #88b67e;
     --venue-proj-line: #5a8a50;
+    --photo-filter: brightness(.92);
     }
 }
 
@@ -290,7 +293,26 @@ summary:focus-visible {
   flex: 1;
 }
 
-.landing-hero { padding: 3rem 0 2.5rem; }
+.landing-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  padding: 3rem 0 2.5rem;
+}
+.landing-hero__text { flex: 1 1 auto; min-width: 0; }
+
+/* Portrait: a quiet circle on the right edge of the column, level with the hero text. */
+.landing-hero__photo {
+  flex: none;
+  width: 13rem;
+  height: 13rem;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--bg-surface);
+  filter: var(--photo-filter);
+}
 
 .landing-hero__name {
   font-size: var(--text-2xl);
@@ -742,7 +764,16 @@ summary:focus-visible {
   .site-nav__links a { font-size: var(--text-xs); }
 
   .site-main { padding: 1.5rem 1rem 3rem; }
-  .landing-hero { padding: 2rem 0 1.5rem; }
+  .landing-hero {
+    flex-direction: column-reverse;     /* portrait above the name */
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 2rem 0 1.5rem;
+  }
+  .landing-hero__photo {
+    width: 7.5rem;
+    height: 7.5rem;
+  }
 
   .news-list { gap: .75rem; }
   .news-item,

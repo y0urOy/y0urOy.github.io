@@ -8,7 +8,7 @@ index.html            the whole site (one page)
 cv.pdf                CV linked from the header, hero and footer
 assets/css/site.css   all styles (tokens at the top)
 assets/js/site.js     theme and language toggles, news "More", BibTeX panels and copy buttons
-assets/img/           og.png (social card) and apple-touch-icon.png
+assets/img/           photo.webp (hero portrait, 640x640), og.png (social card) and apple-touch-icon.png
 favicon.svg  robots.txt  sitemap.xml  .nojekyll
 ```
 
