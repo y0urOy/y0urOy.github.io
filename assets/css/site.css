@@ -302,11 +302,14 @@ summary:focus-visible {
 }
 .landing-hero__text { flex: 1 1 auto; min-width: 0; }
 
-/* Portrait: a quiet circle on the right edge of the column, level with the hero text. */
+/* Portrait: a quiet circle on the right edge of the column. Its top meets the cap height of the
+   name and its bottom the icon glyphs, so it spans exactly the visible hero text (about 158px). */
 .landing-hero__photo {
   flex: none;
-  width: 13rem;
-  height: 13rem;
+  align-self: flex-start;
+  width: 9.875rem;
+  height: 9.875rem;
+  margin-top: .35rem;
   border: 1px solid var(--border);
   border-radius: 50%;
   object-fit: cover;
@@ -773,6 +776,7 @@ summary:focus-visible {
   .landing-hero__photo {
     width: 7.5rem;
     height: 7.5rem;
+    margin-top: 0;
   }
 
   .news-list { gap: .75rem; }
