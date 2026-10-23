@@ -302,7 +302,7 @@ summary:focus-visible {
 }
 .landing-hero__text { flex: 1 1 auto; min-width: 0; }
 
-/* Portrait: a 4:5 card (the site's card radius) flush with the right edge of the column, under the
+/* Portrait: a 4:5 card (the site's card radius) just inside the right edge of the column, under the
    header toggles. Its top meets the cap height of the name and its bottom the icon glyphs. */
 .landing-hero__photo {
   flex: none;
@@ -310,6 +310,7 @@ summary:focus-visible {
   width: 7.9rem;
   height: 9.875rem;
   margin-top: .35rem;
+  margin-right: .75rem;                 /* a touch in from the column edge */
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   object-fit: cover;
@@ -777,6 +778,7 @@ summary:focus-visible {
     width: 6rem;
     height: 7.5rem;
     margin-top: 0;
+    margin-right: 0;
   }
 
   .news-list { gap: .75rem; }
