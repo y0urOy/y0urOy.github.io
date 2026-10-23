@@ -296,17 +296,14 @@ summary:focus-visible {
 .landing-hero {
   display: flex;
   align-items: center;
-  justify-content: flex-start;          /* the portrait sits right beside the text, one group */
-  gap: 3rem;
+  justify-content: space-between;       /* text on the left edge, portrait on the right edge */
+  gap: 2.5rem;
   padding: 3rem 0 2.5rem;
 }
-.landing-hero__text {
-  flex: 0 1 auto;
-  min-width: 25rem;                     /* same portrait position in English and Chinese */
-}
+.landing-hero__text { flex: 1 1 auto; min-width: 0; }
 
-/* Portrait: a 4:5 card (the site's card radius) next to the hero text. Its top meets the cap height
-   of the name and its bottom the icon glyphs, so it spans exactly the visible hero text. */
+/* Portrait: a 4:5 card (the site's card radius) flush with the right edge of the column, under the
+   header toggles. Its top meets the cap height of the name and its bottom the icon glyphs. */
 .landing-hero__photo {
   flex: none;
   align-self: flex-start;
@@ -775,10 +772,6 @@ summary:focus-visible {
     align-items: flex-start;
     gap: 1.25rem;
     padding: 2rem 0 1.5rem;
-  }
-  .landing-hero__text {
-    width: 100%;
-    min-width: 0;
   }
   .landing-hero__photo {
     width: 6rem;
