@@ -34,6 +34,7 @@ Every translatable text appears twice, side by side, as siblings marked `data-la
 
 - **Language.** English by default for every visitor (no browser detection). The 中 / EN button switches the whole page; the choice is stored in `localStorage` (`lang`). `?lang=zh` or `?lang=en` overrides it. An inline script in `<head>` applies the language before the first paint and sets `<html lang>` to `en` or `zh-Hans`. Noto Sans SC is requested only when Chinese is shown. Without JavaScript the page is English only.
 - **Header.** Section links (News, Publications, Education, Experience, CV) on the left, scrolling sideways on phones; the link of the section being read is underlined (`aria-current="location"`, set by `assets/js/site.js`).
+- **Phones.** The header shows NEWS / PAPERS / EDUCATION / EXPERIENCE (CV stays in the icon row), the row only fades and scrolls when it does not fit (below about 360px), toggles and icons have 44px touch targets, and hover styles apply only on devices that can hover (`@media (hover: hover)`), so taps do not leave a stuck highlight.
 - **Theme.** Follows `prefers-color-scheme` until the visitor uses the toggle (stored as `theme`). Without JavaScript the system setting still applies.
 
 ## CV

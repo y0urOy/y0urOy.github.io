@@ -54,7 +54,7 @@
 
 \newcommand{\resumePaper}[2]{
     \item
-    \begin{tabular*}{0.97\textwidth}{l}
+    \begin{tabular*}{0.97\textwidth}{>{\raggedright\arraybackslash}p{0.97\textwidth}}
       \textbf{#1} \\
       \textit{\small #2} \\
     \end{tabular*}\vspace{-7pt}
@@ -76,7 +76,7 @@
 \end{center}
 
 \section{Biography}
-\small{I am a second-year Ph.D. student from Yamasaki Lab, the University of Tokyo. My recent research mainly focuses on computer vision, including \textbf{image, video and 3D generation}.}
+\small{I am a third-year Ph.D. student from Yamasaki Lab, the University of Tokyo. My recent research mainly focuses on computer vision, including \textbf{image, video and 3D generation}.}
 
 \section{Education}
   \resumeSubHeadingListStart
@@ -94,6 +94,13 @@
 \section{Experience}
   \resumeSubHeadingListStart
     \resumeSubheading
+      {Research Intern}{}
+      {Alaya Lab}{Sep. 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Conduct research on 3D generation and programmable worlds.}
+        \resumeItem{First author of MeshAxiom, an agent-native 3D foundation stack; co-author of WorldSculpt, KaiNinja and EditHero.}
+      \resumeItemListEnd
+    \resumeSubheading
       {Research Assistant}{}
       {The University of Tokyo}{Oct. 2024 -- Present}
       \resumeItemListStart
@@ -104,6 +111,13 @@
 
 \section{Publications}
   \resumeSubHeadingListStart
+    \resumePaper
+      {Video-Mirai: Autoregressive Video Diffusion Models Need Foresight}
+      {\textbf{Yonghao Yu}, Lang Huang, Runyi Li, Zerun Wang, Toshihiko Yamasaki}
+      \resumeItemListStart
+        \resumeItem{In Advances in Neural Information Processing Systems (NeurIPS), 2026.}
+        \resumeItem{Proposed Video-Mirai, a training-only foresight objective that lets future segments supervise the current causal state of autoregressive video diffusion models, improving VBench Total over Causal-Forcing and consistency beyond the training horizon with zero inference overhead.}
+      \resumeItemListEnd
     \resumePaper
       {Mirai: Autoregressive Visual Generation Needs Foresight}
       {\textbf{Yonghao Yu}, Lang Huang, Zerun Wang, Runyi Li, Toshihiko Yamasaki}
@@ -129,6 +143,13 @@
 
 \section{Projects}
   \resumeSubHeadingListStart
+    \resumePaper
+      {MeshAxiom: An Agent-Native 3D Foundation Stack for Programmable Worlds}
+      {\textbf{Yonghao Yu}, Ruihan Yu, Sho Kuno, Muyao Niu, Yu-Ju Tsai, Zheng-Hui Huang, Fengbo Lan, Guixu Lin, Runyi Li, Chuanhao Li, Ming-Hsuan Yang, Kaipeng Zhang, Zhixiang Wang}
+      \resumeItemListStart
+        \resumeItem{Open-source release with Alaya Lab, 2026: project page, code and MeshAxiom-Base model weights.}
+        \resumeItem{Developed MeshAxiom-Base, which generates compact explicit meshes from one image and a requested face budget, with file-based tools that let agents inspect, edit and reuse the meshes as modules in scene programs.}
+      \resumeItemListEnd
     \resumePaper
       {Logit Poisoning Attack in Distillation-based Federated Learning and its Countermeasures}
       {\textbf{Yonghao Yu}, Shunan Zhu, Jinglu Hu}

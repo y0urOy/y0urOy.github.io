@@ -180,6 +180,27 @@
     }
   });
 
+  /* Header row on phones: it scrolls sideways when the links do not fit. Fade the right edge only
+     while links are hidden there, and bring the current link into view. */
+  var navRow = doc.querySelector('.site-nav__links');
+  var navFade = function () {
+    if (!navRow) return;
+    navRow.classList.toggle('is-clipped', navRow.scrollWidth - navRow.clientWidth - navRow.scrollLeft > 1);
+  };
+  var revealInRow = function (a) {
+    if (!navRow || navRow.scrollWidth <= navRow.clientWidth) return;
+    var left = a.offsetLeft - navRow.offsetLeft, right = left + a.offsetWidth;
+    if (left < navRow.scrollLeft || right > navRow.scrollLeft + navRow.clientWidth) {
+      navRow.scrollTo({ left: Math.max(0, left - 16), behavior: 'smooth' });
+    }
+  };
+  if (navRow) {
+    navRow.addEventListener('scroll', navFade, { passive: true });
+    window.addEventListener('resize', navFade);
+    new MutationObserver(navFade).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
+    navFade();
+  }
+
   /* Header links: underline the section being read. */
   var spyLinks = {};
   [].forEach.call(doc.querySelectorAll('.site-nav__links a[href^="#"]'), function (a) {
@@ -206,8 +227,13 @@
     }
     cur = spyLock || spyOwner[cur] || cur;
     Object.keys(spyLinks).forEach(function (id) {
-      if (id === cur) spyLinks[id].setAttribute('aria-current', 'location');
-      else spyLinks[id].removeAttribute('aria-current');
+      var a = spyLinks[id];
+      if (id === cur) {
+        if (!a.hasAttribute('aria-current')) {
+          a.setAttribute('aria-current', 'location');
+          revealInRow(a);
+        }
+      } else a.removeAttribute('aria-current');
     });
   };
   if (spySections.length && Object.keys(spyLinks).length) {
