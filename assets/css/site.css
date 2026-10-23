@@ -310,6 +310,7 @@ summary:focus-visible {
   width: 9.875rem;
   height: 9.875rem;
   margin-top: .35rem;
+  margin-right: 2.5rem;                 /* a little in from the right edge of the column */
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   object-fit: cover;
@@ -777,6 +778,7 @@ summary:focus-visible {
     width: 7.5rem;
     height: 7.5rem;
     margin-top: 0;
+    margin-right: 0;
   }
 
   .news-list { gap: .75rem; }
