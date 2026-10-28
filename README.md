@@ -5,7 +5,7 @@ Source of https://y0urOy.github.io/, the homepage of Yonghao Yu. Plain static fi
 ```
 index.html            the whole site (one page)
 404.html              not-found page (root-absolute paths, follows the stored language)
-cv.pdf                CV linked from the header, hero and footer
+cv.pdf                CV linked from the hero and footer icon rows
 assets/css/site.css   all styles (tokens at the top)
 assets/js/site.js     theme and language toggles, news "More", BibTeX panels and copy buttons
 assets/img/           photo.webp (hero portrait, 640x640), og.png (social card) and apple-touch-icon.png
@@ -33,9 +33,11 @@ Every translatable text appears twice, side by side, as siblings marked `data-la
 ## Behaviour
 
 - **Language.** English by default for every visitor (no browser detection). The 中 / EN button switches the whole page; the choice is stored in `localStorage` (`lang`). `?lang=zh` or `?lang=en` overrides it. An inline script in `<head>` applies the language before the first paint and sets `<html lang>` to `en` or `zh-Hans`. Noto Sans SC is requested only when Chinese is shown. Without JavaScript the page is English only.
-- **Header.** Section links (News, Publications, Education, Experience, CV) on the left, scrolling sideways on phones; the link of the section being read is underlined (`aria-current="location"`, set by `assets/js/site.js`).
+- **Header.** Section links (News, Publications, Education, Experience) on the left, scrolling sideways on phones; the link of the section being read is underlined (`aria-current="location"`, set by `assets/js/site.js`).
 - **Phones.** The header shows NEWS / PAPERS / EDUCATION / EXPERIENCE (CV stays in the icon row), the row only fades and scrolls when it does not fit (below about 360px), toggles and icons have 44px touch targets, and hover styles apply only on devices that can hover (`@media (hover: hover)`), so taps do not leave a stuck highlight.
 - **Theme.** Follows `prefers-color-scheme` until the visitor uses the toggle (stored as `theme`). Without JavaScript the system setting still applies.
+
+The hero and footer contact icons use the same order: Email, CV, Google Scholar, GitHub, Hugging Face, LinkedIn, OpenReview. The CV is available in these icon rows rather than the top navigation.
 
 ## CV
 

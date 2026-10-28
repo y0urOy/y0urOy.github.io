@@ -822,8 +822,7 @@ summary:focus-visible {
     padding: .55rem 0;
     letter-spacing: 0;
   }
-  .nav-full,
-  .site-nav__cv { display: none; }
+  .nav-full { display: none; }
   .nav-short { display: inline; }
 
   .site-nav__toggles { gap: .35rem; }
