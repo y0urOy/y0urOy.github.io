@@ -19,12 +19,12 @@ Every translatable text appears twice, side by side, as siblings marked `data-la
 ```html
 <li class="news-item">
   <time datetime="2026-10">2026.10</time>
-  <p data-lang-en><b translate="no"><a href="https://alaya-lab.github.io/EditHero/">EditHero</a></b> is on arXiv.</p>
-  <p data-lang-zh><b translate="no"><a href="https://alaya-lab.github.io/EditHero/">EditHero</a></b> 已发布在 arXiv。</p>
+  <p data-lang-en><b translate="no"><a href="https://alaya-lab.github.io/EditHero/">EditHero</a></b>, a benchmark for long-horizon part-level 3D editing and vibe modeling, is released.</p>
+  <p data-lang-zh><b translate="no"><a href="https://alaya-lab.github.io/EditHero/">EditHero</a></b>，一个面向长程部件级 3D 编辑与 vibe modeling 的基准，已发布。</p>
 </li>
 ```
 
-- **News.** Newest first. One short sentence per item in a shared pattern: the name of the work, then `is on arXiv`, `is released`, `is accepted to VENUE` or `is published at VENUE`. The name carries the only link of the item: the project page if there is one, otherwise the GitHub repository, otherwise arXiv. Paper, code and model links belong in the publication lists. The first six items are visible; give older items the class `news-item news-item--more` so they sit behind the "More" button.
+- **News.** Newest first. One sentence per item in a shared pattern: the name of the work, a one-line description of it, then `is released`, `is accepted to VENUE` or `is published at VENUE`. Keep each item on one line at desktop widths (about 100 characters in English). The name carries the only link of the item: the project page if there is one, otherwise the GitHub repository, otherwise arXiv. Paper, code and model links belong in the publication lists. The seven newest items are visible; give older items the class `news-item news-item--more` so they sit behind the "More" button.
 - **Publications.** Text only, no thumbnails. "Selected Publications" (`#publications`) lists the five selected works newest first, followed by the `*` / `†` legend. "Publications" (`#more-publications`) is the full list, including the selected works again, under year labels, newest first, inside `<details class="pub-all">` so it is collapsed by default (update the English and Chinese counts when adding a paper). A repeated entry needs its own BibTeX id (the timeline copies use `bib-SLUG-all`). Paper titles, author names, venue badges and BibTeX stay in English and carry `lang="en"` and `translate="no"` (so browser machine translation leaves them alone). The owner's name is `<span class="me">`; author marks are `<sup>*</sup>` (equal contribution) and `<sup>†</sup>` (corresponding author). Each BibTeX entry is a `<details class="pub__bib" id="bib-SLUG">` plus a `<button class="bib-btn" aria-controls="bib-SLUG">` in the links row.
 - **Venue badge tones.** `venue venue--pub` for accepted or published papers, plain `venue` for preprints, `venue venue--proj` for project releases.
 - **Labels that live in attributes** (button names, tooltips, page title, meta description) keep both languages in `data-*` attributes next to the element (`data-label-en` / `data-label-zh`, `data-title-en` / `data-title-zh`, `<title data-zh>`).
